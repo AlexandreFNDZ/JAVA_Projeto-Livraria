@@ -20,8 +20,7 @@ public class Cliente {
     private String email;
     
     //Construtor para inicializar os atributos
-    public Cliente(int id_cliente, String nome, String cpf, String telefone_cel, String telefone, String cidade, String estado, String cep, String bairro, String rua, String numero, String email){
-        this.id_cliente = id_cliente;
+    public Cliente(String nome, String cpf, String telefone_cel, String telefone, String cidade, String estado, String cep, String bairro, String rua, String numero, String email){
         this.nome = nome;
         this.cpf = cpf;
         this.telefone_cel = telefone_cel;

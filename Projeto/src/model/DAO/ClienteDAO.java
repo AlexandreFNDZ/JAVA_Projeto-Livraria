@@ -20,10 +20,10 @@ public class ClienteDAO {
         boolean inseriu = false;
         
         try{
-            con = new Conexao().getConnection();
-            String sql = "insert into cliente (id_cliente, nome, cpf, telefone_cel, telefone, cidade, estado, cep, bairro, rua, numero, email) values ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+            con = (Connection) new Conexao().getConnection();
+            String sql = "insert into cliente (id_cliente, nome, cpf, telefone_cel, telefone, cidade, estado, cep, bairro, rua, numero, email) values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt   (1, cli.getId_cliente());
+            stmt.setInt(1, cli.getId_cliente());
             stmt.setString(2, cli.getNome());
             stmt.setString(3, cli.getCpf());
             stmt.setString(4, cli.getTelefone_cel());
