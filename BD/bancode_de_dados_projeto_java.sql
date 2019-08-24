@@ -28,7 +28,7 @@ CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(80) NOT NULL,
   `cpf` char(11) NOT NULL,
-  `telefone_celu` char(11) NOT NULL,
+  `telefone_cel` int(11) NOT NULL,
   `telefone` char(11) NOT NULL,
   `cidade` varchar(30) NOT NULL,
   `estado` char(2) NOT NULL,
@@ -36,6 +36,7 @@ CREATE TABLE `cliente` (
   `bairro` varchar(80) NOT NULL,
   `rua` varchar(80) NOT NULL,
   `numero` varchar(4) NOT NULL,
+  `email` varchar(30) NOT NULL,
   PRIMARY KEY (`id_cliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -82,7 +83,7 @@ CREATE TABLE `produto` (
   `cod_produto` int(11) NOT NULL AUTO_INCREMENT,
   `nome_produto` varchar(80) NOT NULL,
   `descricao` tinytext NOT NULL,
-  `unidade` int(11) NOT NULL,
+  `unidade` varchar(10) DEFAULT NULL,
   `preco` float NOT NULL,
   PRIMARY KEY (`cod_produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -132,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-23 21:17:53
+-- Dump completed on 2019-08-23 22:28:08
