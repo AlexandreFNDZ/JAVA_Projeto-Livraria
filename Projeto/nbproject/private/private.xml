@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/connection/Conexao.java</file>
-            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/view/Cad_Cli.java</file>
-            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/model/bean/Cliente.java</file>
-            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/control/ControleCliente.java</file>
-            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/model/DAO/ClienteDAO.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Arquivos/Projeto_Java/Projeto/src/connection/Conexao.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Arquivos/Projeto_Java/Projeto/src/model/bean/Cliente.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Arquivos/Projeto_Java/Projeto/src/model/DAO/ClienteDAO.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Arquivos/Projeto_Java/Projeto/src/view/Eireli.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Arquivos/Projeto_Java/Projeto/src/control/ControleCliente.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Arquivos/Projeto_Java/Projeto/src/view/Cad_Cli.java</file>
         </group>
     </open-files>
 </project-private>
