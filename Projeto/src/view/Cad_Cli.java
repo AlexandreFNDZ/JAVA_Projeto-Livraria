@@ -2,7 +2,6 @@
 package view;
 
 import control.ControleCliente;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -276,8 +275,6 @@ public class Cad_Cli extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         boolean inseriu = false;
-        
-      
         try{
             inseriu = ctrlCliente.insereCliente(this.txtNome.getText(), this.ftxtCpf.getText(), this.ftxtCel.getText(),
                     this.ftxtTel.getText(),(String)this.jComboCidade.getSelectedItem(), (String)this.jComboEstado.getSelectedItem(), 
