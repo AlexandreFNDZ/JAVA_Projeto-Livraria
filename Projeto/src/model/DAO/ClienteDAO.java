@@ -8,7 +8,7 @@ import model.bean.Cliente;
 
 /**
  *
- * @author Alexandre / Elias / Elzio
+ * @author Elias / Elzio
  */
 public class ClienteDAO {
     

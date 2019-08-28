@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  * Classe de Conexão
- * @author Alexandre / Elzio / Elias
+ * @author Elias /  Elzio
  */
 public class Conexao {
     public Connection getConnection() throws SQLException, ClassNotFoundException {

@@ -3,7 +3,7 @@ package model.bean;
 
 /**
  *
- * @author Alexandre / Elias / Elzio
+ * @author Elias / Elzio
  */
 public class Cliente {
     private int id_cliente;
