@@ -52,6 +52,7 @@ public class Eireli extends javax.swing.JFrame {
             .addGap(0, 334, Short.MAX_VALUE)
         );
 
+        jMenuCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_add.png"))); // NOI18N
         jMenuCadastro.setText("Cadastros");
 
         jMenuCliente.setText("Cliente");
@@ -91,6 +92,7 @@ public class Eireli extends javax.swing.JFrame {
 
         jMenuBar.add(jMenuCadastro);
 
+        jMenuOperacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_lightning.png"))); // NOI18N
         jMenuOperacao.setText("Operações");
 
         jMenuVenda.setText("Venda");
