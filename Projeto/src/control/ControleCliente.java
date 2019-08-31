@@ -1,6 +1,7 @@
 package control;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.DAO.ClienteDAO;
 import model.bean.Cliente;
 
@@ -15,5 +16,9 @@ public class ControleCliente {
         ClienteDAO cliDAO = new ClienteDAO();
         boolean inseriu = cliDAO.inserir(cli);
         return inseriu;
+    }
+    public ArrayList<Cliente> buscarClienteCpf(String cpf) throws SQLException, ClassNotFoundException{
+        ClienteDAO cDaoCpf = new ClienteDAO();
+        return (cDaoCpf.buscaClienteCPF(cpf));
     }
 }
