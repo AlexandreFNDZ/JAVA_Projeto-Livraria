@@ -6,7 +6,7 @@ import model.bean.Cliente;
 
 /**
  *
- * @author Elias / Elzio
+ * @author Alexandre / Elias / Elzio
  */
 public class ControleCliente {
     

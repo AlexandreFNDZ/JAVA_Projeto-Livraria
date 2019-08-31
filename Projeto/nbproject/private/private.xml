@@ -4,7 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/view/Eireli.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/control/ControleProduto.java</file>
             <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/view/Cad_Prod.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/model/bean/Produtos.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/model/DAO/ProdutosDAO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,4 +1,3 @@
-
 package model.dao;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
@@ -13,7 +12,7 @@ import model.bean.Produtos;
 
 /**
  *
- * @author Elias / Elzio
+ * @author Alexandre / Elias / Elzio
  */
 public class ProdutosDAO {
     
@@ -25,13 +24,14 @@ public class ProdutosDAO {
         
         try {
             con = new Conexao().getConnection();
-            String sql = "INSERT INTO produto (cod_produto, nome_produto, descricao, unidade, preco) values (?,?,?,?,?)";
+            String sql = "INSERT INTO produto (cod_produto, titulo, autor, genero, editora, precoUni) values (?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, prod.getCod_prod());
-            stmt.setString(2, prod.getNome_prod());
-            stmt.setString(3, prod.getDescrição());
-            stmt.setString(4, prod.getUnidade());
-            stmt.setFloat(5,prod.getPrecoUni());
+            stmt.setString(2, prod.getTitulo());
+            stmt.setString(3, prod.getAutor());
+            stmt.setString(4, prod.getGenero());
+            stmt.setString(5, prod.getEditora());
+            stmt.setFloat(6,prod.getPrecoUni());
             stmt.execute();
             stmt.close();
             inseriu = true;
@@ -81,10 +81,11 @@ public class ProdutosDAO {
             while (rs.next()) {
                 Produtos prod = new Produtos();
                 prod.setCod_prod(rs.getInt("cod_produto"));
-                prod.setNome_prod(rs.getString("nome_produto"));
-                prod.setDescrição(rs.getString("descricao"));
-                prod.setUnidade(rs.getString("unidade"));
-                prod.setPrecoUni(rs.getFloat("preco"));
+                prod.setTitulo(rs.getString("titulo"));
+                prod.setAutor(rs.getString("autor"));
+                prod.setGenero(rs.getString("genero"));
+                prod.setEditora(rs.getString("editora"));
+                prod.setPrecoUni(rs.getFloat("precoUni"));
        
                 listaProd.add(prod);
             }
@@ -105,12 +106,13 @@ public class ProdutosDAO {
         
         try {
             con = new Conexao().getConnection();
-            String sql = "UPDATE produto SET nome_produto = ?,descricao = ?,unidade = ?,preco = ? WHERE cod_produto = " + prod.getCod_prod();
+            String sql = "UPDATE produto SET titulo = ?,autor = ?,genero = ?, editora = ?, precoUni = ? WHERE cod_produto = " + prod.getCod_prod();
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, prod.getNome_prod());
-            stmt.setString(2, prod.getDescrição());
-            stmt.setString(3, prod.getUnidade());
-            stmt.setFloat(4,prod.getPrecoUni());
+            stmt.setString(1, prod.getTitulo());
+            stmt.setString(2, prod.getAutor());
+            stmt.setString(3, prod.getGenero());
+            stmt.setString(4, prod.getEditora());
+            stmt.setFloat(5,prod.getPrecoUni());
             stmt.execute();
             stmt.close();
             atualizou = true;

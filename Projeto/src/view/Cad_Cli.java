@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Elias / Elzio
+ * @author Alexandre / Elias / Elzio
  */
 public class Cad_Cli extends javax.swing.JFrame {
     

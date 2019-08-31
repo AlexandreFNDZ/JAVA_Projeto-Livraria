@@ -3,7 +3,7 @@ package view;
 
 /**
  *
- * @author Elias / Elzio
+ * @author Alexandre / Elias / Elzio
  */
 public class ConsultaCliente extends javax.swing.JFrame {
 
