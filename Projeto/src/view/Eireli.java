@@ -38,6 +38,7 @@ public class Eireli extends javax.swing.JFrame {
         jMenuConsProd = new javax.swing.JMenuItem();
         jMenuOperacao = new javax.swing.JMenu();
         jMenuVenda = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +95,15 @@ public class Eireli extends javax.swing.JFrame {
         jMenuOperacao.setText("Operações");
 
         jMenuVenda.setText("Venda");
+
+        jMenuItem1.setText("Cadastrar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuVenda.add(jMenuItem1);
+
         jMenuOperacao.add(jMenuVenda);
 
         jMenuBar.add(jMenuOperacao);
@@ -125,6 +135,10 @@ public class Eireli extends javax.swing.JFrame {
     private void jMenuCadProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadProActionPerformed
         new Cad_Prod().setVisible(true);
     }//GEN-LAST:event_jMenuCadProActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new Cad_Venda().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,6 +183,7 @@ public class Eireli extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuCliente;
     private javax.swing.JMenuItem jMenuConsCli;
     private javax.swing.JMenuItem jMenuConsProd;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jMenuOperacao;
     private javax.swing.JMenu jMenuProduto;
     private javax.swing.JMenu jMenuVenda;
