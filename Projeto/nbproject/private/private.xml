@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/aluno/Desktop/JAVA/Projeto_Java/Projeto/src/model/DAO/ProdutosDAO.java</file>
             <file>file:/C:/Users/aluno/Desktop/JAVA/Projeto_Java/Projeto/src/view/Eireli.java</file>
             <file>file:/C:/Users/aluno/Desktop/JAVA/Projeto_Java/Projeto/src/view/ConsultaVenda.java</file>
             <file>file:/C:/Users/aluno/Desktop/JAVA/Projeto_Java/Projeto/src/view/Cad_Venda.java</file>
+=======
+            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/view/ConsultaCliente.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/model/DAO/ClienteDAO.java</file>
+            <file>file:/C:/Users/aluno/Desktop/Nova%20pasta/Projeto_Java/Projeto/src/model/bean/Produtos.java</file>
+>>>>>>> cd062eb880d6fa3852447a4fccfebc4868d455ca
         </group>
     </open-files>
 </project-private>

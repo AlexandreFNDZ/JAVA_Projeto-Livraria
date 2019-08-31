@@ -3,14 +3,30 @@ package model.bean;
 
 /**
  *
- * @author Elias / Elzio
+ * @author Alexandre / Elias / Elzio
  */
 public class Produtos {
     private int cod_prod;
-    private String nome_prod;
-    private String descrição;
-    private String unidade;
+    private String titulo;
+    private String autor;
+    private String genero;
+    private String editora;
     private float precoUni;
+    
+    //Construtor para inicializar os atributos
+    public Produtos(int cod_prod, String titulo, String autor, String genero, String editora, float precoUni){
+        this.cod_prod = cod_prod;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.genero = genero;
+        this.editora = editora;
+        this.precoUni = precoUni;
+    }
+    
+    //Recarga de construtor
+    public Produtos(){
+        
+    }
 
     public int getCod_prod() {
         return cod_prod;
@@ -19,25 +35,32 @@ public class Produtos {
         this.cod_prod = cod_prod;
     }
     
-    public String getNome_prod() {
-        return nome_prod;
+    public String getTitulo() {
+        return titulo;
     }
-    public void setNome_prod(String nome_prod) {
-        this.nome_prod = nome_prod;
-    }
-    
-    public String getDescrição() {
-        return descrição;
-    }
-    public void setDescrição(String descrição) {
-        this.descrição = descrição;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
     
-    public String getUnidade() {
-        return unidade;
+    public String getAutor() {
+        return autor;
     }
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+    
+    public String getGenero() {
+        return genero;
+    }
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+    
+    public String getEditora() {
+        return editora;
+    }
+    public void setEditora(String editora) {
+        this.editora = editora;
     }
     
     public float getPrecoUni() {

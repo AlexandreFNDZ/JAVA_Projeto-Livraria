@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Classe de Conexão
- * @author Elias /  Elzio
+ * 
+ * @author Alexandre / Elias /  Elzio
  */
 public class Conexao {
     public Connection getConnection() throws SQLException, ClassNotFoundException {

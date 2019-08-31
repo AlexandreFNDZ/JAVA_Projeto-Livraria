@@ -3,12 +3,14 @@ package model.DAO;
 import com.mysql.jdbc.Connection;
 import connection.Conexao;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.bean.Cliente;
 
 /**
  *
- * @author Elias / Elzio
+ * @author Alexandre / Elias / Elzio
  */
 public class ClienteDAO {
     
@@ -43,5 +45,34 @@ public class ClienteDAO {
             con.close();
         }
         return inseriu;
+    }
+    
+    public Cliente buscaClienteCPF(String cpf) throws SQLException, ClassNotFoundException{
+        
+        Cliente cli = new Cliente();      
+        ResultSet rs = null;
+        try{
+            con = (Connection) new Conexao().getConnection();
+            String sql = "select id_cliente, nome, email, cpf, telefone_cel, telefone, estado, cidade From cliente where cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, cpf);
+            rs = stmt.executeQuery();
+           
+            cli.setId_cliente(rs.getInt("id_cliente"));
+            cli.setCpf(rs.getString("nome"));
+            cli.setCpf(rs.getString("email"));
+            cli.setCpf(rs.getString("cpf"));
+            cli.setCpf(rs.getString("telefone"));
+            cli.setCpf(rs.getString("telefone_cel"));
+            cli.setCpf(rs.getString("celular"));
+            cli.setCpf(rs.getString("estado"));
+            cli.setCpf(rs.getString("ciade"));    
+            stmt.close();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }finally{
+            con.close();
+        }        
+        return cli;
     }
 }
