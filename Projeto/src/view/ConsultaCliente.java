@@ -1,6 +1,14 @@
 
 package view;
 
+import control.ControleCliente;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Cliente;
+
+
 /**
  *
  * @author Alexandre / Elias / Elzio
@@ -10,8 +18,11 @@ public class ConsultaCliente extends javax.swing.JFrame {
     /**
      * Creates new form ConsultaCliente
      */
+    
+    ControleCliente ctrlCliente;
     public ConsultaCliente() {
         initComponents();
+        ctrlCliente = new ControleCliente();
     }
 
     /**
@@ -25,7 +36,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbtBusca = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
@@ -38,7 +49,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbtBusca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -46,9 +57,9 @@ public class ConsultaCliente extends javax.swing.JFrame {
                 "ID", "Nome", "Email", "CPF", "Telefone ", "Celular", "Estado", "Cidade"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(tbtBusca);
+        if (tbtBusca.getColumnModel().getColumnCount() > 0) {
+            tbtBusca.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jLabel2.setText("Nome:");
@@ -58,6 +69,11 @@ public class ConsultaCliente extends javax.swing.JFrame {
         ComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "DF", "RJ", "SC", "SP", "PR" }));
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel5.setText("Consulta Clientes");
@@ -140,6 +156,24 @@ public class ConsultaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        if(this.Ftxtcpf == null){
+            try{
+                DefaultTableModel dados = (DefaultTableModel)(tbtBusca.getModel());
+                dados.setNumRows(0);
+                ArrayList<Cliente> lista = new ArrayList();
+                Iterator<Cliente> it = lista.iterator();
+                while(it.hasNext()){
+                    Cliente cli = it.next();
+                    dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getEmail(), cli.getCpf(), cli.getTelefone(), cli.getTelefone_cel(), 
+                    });  
+                }
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,7 +220,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbtBusca;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

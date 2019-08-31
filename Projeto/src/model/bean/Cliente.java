@@ -33,7 +33,14 @@ public class Cliente {
         this.numero = numero;
         this.email = email;
     }
-
+    
+    public Cliente(String cpf){
+        this.setCpf(cpf);
+    }
+    
+    public Cliente(){
+        
+    }
 
     public int getId_cliente() {
         return id_cliente;
