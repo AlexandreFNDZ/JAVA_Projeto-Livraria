@@ -47,18 +47,17 @@ public class ClienteDAO {
         return inseriu;
     }
     
-    public ArrayList<Cliente> buscaClienteCPF(String cpf) throws SQLException, ClassNotFoundException{
-      
+    public Cliente buscaClienteCPF(String cpf) throws SQLException, ClassNotFoundException{
+        
+        Cliente cli = new Cliente();      
         ResultSet rs = null;
-        ArrayList<Cliente> lista = new ArrayList();
         try{
             con = (Connection) new Conexao().getConnection();
             String sql = "select id_cliente, nome, email, cpf, telefone_cel, telefone, estado, cidade From cliente where cpf = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, cpf);
             rs = stmt.executeQuery();
-            
-            Cliente cli = new Cliente();
+           
             cli.setId_cliente(rs.getInt("id_cliente"));
             cli.setCpf(rs.getString("nome"));
             cli.setCpf(rs.getString("email"));
@@ -73,9 +72,7 @@ public class ClienteDAO {
             ex.printStackTrace();
         }finally{
             con.close();
-        }
-        
-        
-        return lista;
+        }        
+        return cli;
     }
 }

@@ -26,7 +26,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,9 +119,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Autor:"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Autor:"/>
-          </AccessibilityProperties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDescricao">
         </Component>
@@ -147,7 +144,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jFPreco" min="-2" pref="97" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" pref="55" max="32767" attributes="0"/>
                               <Component id="jCGenero" min="-2" pref="87" max="-2" attributes="0"/>
                           </Group>
                           <Component id="txtEditora" max="32767" attributes="0"/>
