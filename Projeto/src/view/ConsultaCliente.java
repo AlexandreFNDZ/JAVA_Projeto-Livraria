@@ -14,12 +14,12 @@ import model.bean.Cliente;
  * @author Alexandre / Elias / Elzio
  */
 public class ConsultaCliente extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ConsultaCliente
-     */
     
     ControleCliente ctrlCliente;
+    
+    /**
+     * Creates new form ConsultaCliente
+     */   
     public ConsultaCliente() {
         initComponents();
         ctrlCliente = new ControleCliente();

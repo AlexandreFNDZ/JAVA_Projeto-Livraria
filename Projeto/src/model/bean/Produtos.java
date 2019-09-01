@@ -13,9 +13,8 @@ public class Produtos {
     private String editora;
     private float precoUni;
     
-    //Construtor para inicializar os atributos
-    public Produtos(int cod_prod, String titulo, String autor, String genero, String editora, float precoUni){
-        this.cod_prod = cod_prod;
+    //Recarga de construtor   
+    public Produtos(String titulo, String autor, String genero, String editora, float precoUni){
         this.titulo = titulo;
         this.autor = autor;
         this.genero = genero;
@@ -23,11 +22,17 @@ public class Produtos {
         this.precoUni = precoUni;
     }
     
-    //Recarga de construtor
+    //Recarga de construtor defalut
     public Produtos(){
         
     }
+    
+    //Recarga de Construtor
+    public Produtos(int cod_produto){
+        this.cod_prod = cod_produto;
+    }
 
+    //Métodos acessores e Modificadores
     public int getCod_prod() {
         return cod_prod;
     }

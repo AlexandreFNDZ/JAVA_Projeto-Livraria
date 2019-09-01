@@ -82,6 +82,11 @@ public class Eireli extends javax.swing.JFrame {
         jMenuProduto.add(jMenuCadPro);
 
         jMenuConsProd.setText("Consulta");
+        jMenuConsProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuConsProdActionPerformed(evt);
+            }
+        });
         jMenuProduto.add(jMenuConsProd);
 
         jMenuCadastro.add(jMenuProduto);
@@ -136,6 +141,10 @@ public class Eireli extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         new Cad_Venda().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuConsProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConsProdActionPerformed
+        new ConsultaProduto().setVisible(true);
+    }//GEN-LAST:event_jMenuConsProdActionPerformed
 
     /**
      * @param args the command line arguments

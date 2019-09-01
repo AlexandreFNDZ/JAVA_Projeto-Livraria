@@ -1,16 +1,18 @@
-
 package view;
 
 import control.ControleProduto;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  *
  * @author Alexandre / Elias / Elzio
  */
 public class Cad_Prod extends javax.swing.JFrame {
-    
+
     ControleProduto ctrlProdutos;
 
     /**
@@ -18,7 +20,7 @@ public class Cad_Prod extends javax.swing.JFrame {
      */
     public Cad_Prod() {
         initComponents();
-        ctrlProdutos = new ControleProduto(); 
+        ctrlProdutos = new ControleProduto();
     }
 
     /**
@@ -30,14 +32,12 @@ public class Cad_Prod extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCGenero = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jCGenero = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtEditora = new javax.swing.JTextField();
@@ -46,24 +46,27 @@ public class Cad_Prod extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
 
+        jCGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Romance", "Ficção", "Tragédia", "Comédia" }));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Cadastro de Produto");
 
-        jLabel2.setText("Código:");
-
         jLabel3.setText("Autor:");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Especificações"));
-
-        jCGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Romance", "Ficção", "Tragédia", "Comédia" }));
 
         jLabel5.setText("Preço Unitário:");
 
         jLabel4.setText("Editora:");
 
-        jFPreco.setText("R$");
+        jFPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        jFPreco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFPrecoFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -72,30 +75,29 @@ public class Cad_Prod extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jFPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 55, Short.MAX_VALUE)
-                        .addComponent(jCGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtEditora))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jFPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(43, 43, 43)
+                        .addComponent(txtEditora)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jCGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 45, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         btnCadastar.setText("Cadastrar");
@@ -114,23 +116,18 @@ public class Cad_Prod extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDescricao))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDescricao)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING)))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCadastar))
@@ -138,12 +135,10 @@ public class Cad_Prod extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -154,7 +149,7 @@ public class Cad_Prod extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastar)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,7 +159,7 @@ public class Cad_Prod extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,15 +171,34 @@ public class Cad_Prod extends javax.swing.JFrame {
 
     private void btnCadastarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastarActionPerformed
         boolean inseriu = false;
-        try{
-            inseriu = ctrlProdutos.insereProduto(Integer.parseInt(this.txtCodigo.getText()), this.txtNome.getText(), this.txtDescricao.getText(), this.jCGenero.getSelectedItem().toString(), this.txtEditora.getText(), Float.parseFloat(this.jFPreco.getText().replace("R$", "").replace(",",".")));
-        }catch(SQLException ex){
+        try {
+            inseriu = ctrlProdutos.insereProduto(this.txtNome.getText(), this.txtDescricao.getText(), this.jCGenero.getSelectedItem().toString(), this.txtEditora.getText(), Float.parseFloat(this.jFPreco.getText().replace("R$", "").replace(" ", "").replace(".", "").replace(",", ".")));
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        if(inseriu){
+        if (inseriu) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
         }
     }//GEN-LAST:event_btnCadastarActionPerformed
+
+    private void jFPrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFPrecoFocusLost
+
+        //declarando uma variável e pegando o valor da tela
+        String valor = jFPreco.getText();
+
+        //tirando a formatação da variável 
+        String valor2 = valor.replace("R$", "").replace(" ", "").replace(".", "").replace(",", ".");
+
+        //declarando uma variável do tipo moeda aceito
+        BigDecimal valor3 = new BigDecimal(valor2);
+        
+        //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
+        NumberFormat valor4 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        
+        //criando uma variável para enviar para a tela
+        String valorFormatado = valor4.format(valor3);
+        jFPreco.setText(valorFormatado);
+    }//GEN-LAST:event_jFPrecoFocusLost
 
     /**
      * @param args the command line arguments
@@ -226,14 +240,12 @@ public class Cad_Prod extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCGenero;
     private javax.swing.JFormattedTextField jFPreco;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtEditora;
     private javax.swing.JTextField txtNome;
