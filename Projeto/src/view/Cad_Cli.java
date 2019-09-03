@@ -56,7 +56,7 @@ public class Cad_Cli extends javax.swing.JFrame {
         lbEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Cadastro de Cliente");

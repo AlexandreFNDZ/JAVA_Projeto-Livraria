@@ -47,7 +47,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         Ftxtcpf = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tbtBusca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

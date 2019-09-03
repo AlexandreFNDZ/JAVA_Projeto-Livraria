@@ -57,7 +57,7 @@ public class Cad_Venda extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -256,7 +256,6 @@ public class Cad_Venda extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(255, 51, 51));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setText("Excluir");
-        jButton2.setActionCommand("Excluir");
 
         jButton3.setBackground(new java.awt.Color(0, 204, 0));
         jButton3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N

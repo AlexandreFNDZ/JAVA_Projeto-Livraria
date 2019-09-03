@@ -48,7 +48,7 @@ public class ConsultaVenda extends javax.swing.JFrame {
         lblCnpjLoja = new javax.swing.JLabel();
         lblEnderecoLoja = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblEmissao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmissao.setText("Emissão:");
