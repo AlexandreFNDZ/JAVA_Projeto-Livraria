@@ -48,7 +48,7 @@ public class Cad_Prod extends javax.swing.JFrame {
 
         jCGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Romance", "Ficção", "Tragédia", "Comédia" }));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Cadastro de Produto");
