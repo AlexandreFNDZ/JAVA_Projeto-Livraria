@@ -6,15 +6,50 @@
 
 package view;
 
+import control.ControleCliente;
+import control.ControleProduto;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
+import model.bean.Cliente;
+import model.bean.Produtos;
+
 /**
  *
- * @author aluno
+ * @author Alexandre / Elzio / Elias
  */
 public class Cad_Venda extends javax.swing.JFrame {
 
+    ControleCliente ctrlCli;
+    ControleProduto ctrlProd;
+    ArrayList<Produtos> listProd;
+    ArrayList<Cliente> listCli;
     /** Creates new form Cad_Venda */
     public Cad_Venda() {
         initComponents();
+        ctrlCli = ControleCliente.getInstancia();
+        ctrlProd = ControleProduto.getInstancia();
+        
+        try {
+            listCli = ctrlCli.buscaCliente();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao carregar lista de Clientes. Reinicie a janela!");
+        }
+        
+        Iterator it = listCli.iterator();
+        while (it.hasNext()) {
+            if (this.cmbCliente.getComponentCount() == 0) {
+                this.cmbCliente.addItem("Todos");
+            }
+            
+            Cliente cli = (Cliente) it.next();
+            this.cmbCliente.addItem(cli.getNome());
+        }
+        
+        this.cmbProduto.setEnabled(false);
+        this.btnInserirProd.setEnabled(false);
+        this.txtQtdProd.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -253,7 +288,7 @@ public class Cad_Venda extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(4).setMaxWidth(70);
         }
 
-        jButton2.setBackground(new java.awt.Color(255, 51, 51));
+        jButton2.setBackground(new java.awt.Color(204, 0, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton2.setText("Excluir");
 
