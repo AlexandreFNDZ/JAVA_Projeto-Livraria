@@ -47,6 +47,45 @@ public class ClienteDAO {
         return inseriu;
     }
     
+    public ArrayList<Cliente> buscarCliente() throws SQLException {
+        ResultSet rs = null;
+        ArrayList<Cliente> listaCli = new ArrayList<Cliente>();
+        
+        try {
+            con = (Connection) new Conexao().getConnection();
+            String sql = "SELECT * FROM cliente";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Cliente cli = new Cliente();
+                cli.setId_cliente(rs.getInt("id_cliente"));
+                cli.setNome(rs.getString("nome"));
+                cli.setCpf(rs.getString("cpf"));
+                cli.setTelefone_cel(rs.getString("telefone_cel"));
+                cli.setTelefone(rs.getString("telefone"));
+                cli.setCidade(rs.getString("cidade"));
+                cli.setEstado(rs.getString("estado"));
+                cli.setCep(rs.getString("cep"));
+                cli.setBairro(rs.getString("bairro"));
+                cli.setRua(rs.getString("rua"));
+                cli.setNumero(rs.getString("numero"));
+                cli.setEmail(rs.getString("email"));
+                
+                listaCli.add(cli);
+            }
+            
+            stmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            con.close();
+        }
+        
+        return listaCli;
+    }
+    
     public Cliente buscaClienteCPF(String cpf) throws SQLException, ClassNotFoundException{
         
         Cliente cli = new Cliente();      

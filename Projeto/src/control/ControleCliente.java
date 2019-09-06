@@ -17,8 +17,9 @@ public class ControleCliente {
         boolean inseriu = cliDAO.inserir(cli);
         return inseriu;
     }
-    public Cliente buscarClienteCpf(String cpf) throws SQLException, ClassNotFoundException{
-        ClienteDAO cDaoCpf = new ClienteDAO();
-        return (cDaoCpf.buscaClienteCPF(cpf));
+    
+    public ArrayList<Cliente> buscarCliente() throws SQLException{
+        ClienteDAO cliDAO = new ClienteDAO();
+        return (cliDAO.buscarCliente());
     }
 }
