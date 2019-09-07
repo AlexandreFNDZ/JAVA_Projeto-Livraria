@@ -407,22 +407,23 @@ public class ConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcuirActionPerformed
 
     private void jFPrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFPrecoFocusLost
-
         //declarando uma variável e pegando o valor da tela
         String valor = jFPreco.getText();
-
-        //tirando a formatação da variável
-        String valor2 = valor.replace("R$", "").replace(" ", "").replace(".", "").replace(",", ".");
-
+        
         //declarando uma variável do tipo moeda aceito
-        BigDecimal valor3 = new BigDecimal(valor2);
-
+        BigDecimal valor2 = new BigDecimal(valor);
+        
         //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
-        NumberFormat valor4 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-
-        //criando uma variável para enviar para a tela
-        String valorFormatado = valor4.format(valor3);
-        jFPreco.setText(valorFormatado);
+        NumberFormat valor3 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            
+        if(!"".equals(valor)){       
+            //criando uma variável para enviar para a tela
+            String valorFormatado = valor3.format(valor2);
+            jFPreco.setText(valorFormatado);
+        }else{
+            
+            jFPreco.setText(valor);
+        }
     }//GEN-LAST:event_jFPrecoFocusLost
 
     private void jFPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFPrecoActionPerformed
