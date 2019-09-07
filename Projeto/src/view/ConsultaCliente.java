@@ -49,6 +49,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         Ftxtcpf = new javax.swing.JFormattedTextField();
         btnDetalhes = new javax.swing.JToggleButton();
+        btnExcluir = new javax.swing.JToggleButton();
+        btnLimpar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -60,15 +62,29 @@ public class ConsultaCliente extends javax.swing.JFrame {
             new String [] {
                 "ID", "Nome", "Celular", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbtBusca);
         if (tbtBusca.getColumnModel().getColumnCount() > 0) {
-            tbtBusca.getColumnModel().getColumn(0).setPreferredWidth(5);
+            tbtBusca.getColumnModel().getColumn(0).setResizable(false);
+            tbtBusca.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tbtBusca.getColumnModel().getColumn(1).setResizable(false);
+            tbtBusca.getColumnModel().getColumn(1).setPreferredWidth(180);
             tbtBusca.getColumnModel().getColumn(2).setResizable(false);
+            tbtBusca.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tbtBusca.getColumnModel().getColumn(3).setResizable(false);
+            tbtBusca.getColumnModel().getColumn(3).setPreferredWidth(120);
         }
 
-        btnPesquisar.setBackground(new java.awt.Color(255, 153, 51));
-        btnPesquisar.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
+        btnPesquisar.setBackground(new java.awt.Color(255, 255, 204));
+        btnPesquisar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_form_magnify.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,8 +149,9 @@ public class ConsultaCliente extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        btnDetalhes.setBackground(new java.awt.Color(255, 153, 51));
+        btnDetalhes.setBackground(new java.awt.Color(204, 255, 204));
         btnDetalhes.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnDetalhes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_add.png"))); // NOI18N
         btnDetalhes.setText("Detalhes");
         btnDetalhes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,16 +159,37 @@ public class ConsultaCliente extends javax.swing.JFrame {
             }
         });
 
+        btnExcluir.setBackground(new java.awt.Color(255, 204, 204));
+        btnExcluir.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_delete.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -160,26 +198,35 @@ public class ConsultaCliente extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(168, 168, 168))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                    .addComponent(btnDetalhes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(146, 146, 146))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(52, 52, 52)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(262, 262, 262))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(146, 146, 146)
                 .addComponent(jLabel1)
@@ -192,12 +239,14 @@ public class ConsultaCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 635, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -216,7 +265,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                 Iterator it = lista.iterator();
                 while(it.hasNext()){
                     Cliente cli = (Cliente) it.next();
-                    dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getCpf(), cli.getTelefone_cel(), cli.getTelefone(), cli.getCidade(), cli.getEstado(), cli.getCep(), cli.getBairro(), cli.getRua(), cli.getNumero(), cli.getEmail()});
+                    dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getTelefone_cel(), cli.getEmail()});
                 }
             }catch(SQLException ex){
                 ex.printStackTrace();
@@ -228,7 +277,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Cliente cli = (Cliente) it.next();
-                        dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getCpf(), cli.getTelefone_cel(), cli.getTelefone(), cli.getCidade(), cli.getEstado(), cli.getCep(), cli.getBairro(), cli.getRua(), cli.getNumero(), cli.getEmail()});
+                        dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getTelefone_cel(), cli.getEmail()});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
@@ -240,7 +289,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Cliente cli = (Cliente) it.next();
-                        dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getCpf(), cli.getTelefone_cel(), cli.getTelefone(), cli.getCidade(), cli.getEstado(), cli.getCep(), cli.getBairro(), cli.getRua(), cli.getNumero(), cli.getEmail()});
+                        dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getTelefone_cel(), cli.getEmail()});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
@@ -252,7 +301,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Cliente cli = (Cliente) it.next();
-                        dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getCpf(), cli.getTelefone_cel(), cli.getTelefone(), cli.getCidade(), cli.getEstado(), cli.getCep(), cli.getBairro(), cli.getRua(), cli.getNumero(), cli.getEmail()});
+                        dados.addRow(new Object[]{cli.getId_cliente(), cli.getNome(), cli.getTelefone_cel(), cli.getEmail()});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
@@ -264,6 +313,33 @@ public class ConsultaCliente extends javax.swing.JFrame {
     private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDetalhesActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = tbtBusca.getSelectedRow();
+        
+        if(linha != -1){
+            boolean excluiu = false;
+            int cod = Integer.parseInt(tbtBusca.getValueAt(linha, 0).toString());
+            try{
+                excluiu = ctrlCliente.excluiCliente(cod);
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            if(excluiu){
+                JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione um item para ser removido!");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        txtNome.setText("");
+        ComboBoxEstado.setSelectedIndex(0);
+        Ftxtcpf.setText("");
+        DefaultTableModel dados = (DefaultTableModel) tbtBusca.getModel();
+        dados.setNumRows(0);
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,6 +380,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboBoxEstado;
     private javax.swing.JFormattedTextField Ftxtcpf;
     private javax.swing.JToggleButton btnDetalhes;
+    private javax.swing.JToggleButton btnExcluir;
+    private javax.swing.JToggleButton btnLimpar;
     private javax.swing.JToggleButton btnPesquisar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

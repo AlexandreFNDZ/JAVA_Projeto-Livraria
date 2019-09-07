@@ -125,4 +125,25 @@ public class ClienteDAO {
         
         return listaCli;
     }
+    
+    public boolean excluirCliente(Cliente cli) throws SQLException {
+        
+        boolean excluiu = false;
+        
+        try {
+            con = (Connection) new Conexao().getConnection();
+            String sql = "DELETE FROM cliente WHERE id_cliente = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, cli.getId_cliente());
+            stmt.execute();
+            stmt.close();
+            excluiu = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            con.close();
+        }
+        
+        return excluiu;
+    }
 }
