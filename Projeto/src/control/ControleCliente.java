@@ -38,10 +38,17 @@ public class ControleCliente {
         return (cliDAO.buscarCliente(coluna, frame));
     }
     
-    public boolean excluiCliente(int id_cliente) throws SQLException{
+    public boolean excluirCliente(int id_cliente) throws SQLException{
         Cliente cli = new Cliente();
         ClienteDAO cliDAO = new ClienteDAO();
-        boolean excluiu = cliDAO.excluirCliente(cli);
+        boolean excluiu = cliDAO.excluirCliente(id_cliente);
         return excluiu;
+    }
+    
+    public boolean atualizarCliente(String nome, String cpf, String telefone_cel, String telefone, String cidade, String estado, String cep, String bairro, String rua, String numero, String email) throws SQLException, ClassNotFoundException{
+        Cliente cli = new Cliente();
+        ClienteDAO cliDAO = new ClienteDAO();
+        boolean atualizou = cliDAO.atualizarCliente(nome, cpf, telefone_cel, telefone, cidade, estado, cep, bairro, rua, numero, email);
+        return atualizou;
     }
 }

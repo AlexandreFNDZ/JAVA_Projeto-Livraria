@@ -2,6 +2,9 @@
 package view;
 
 import control.ControleCliente;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +21,20 @@ public class Cad_Cli extends javax.swing.JFrame {
     public Cad_Cli() {
         initComponents();
         ctrlCliente = new ControleCliente();
+    }
+    
+    public void limpa(){
+        txtNome.setText("");
+        ftxtTel.setValue(null);
+        ftxtCel.setValue(null);
+        ftxtCpf.setValue(null);
+        txtEmail.setText("");
+        jComboEstado.setSelectedIndex(0);
+        jComboCidade.setSelectedItem(null);
+        txtRua.setText("");
+        txtNum.setText("");
+        txtBairro.setText("");
+        ftxtCep.setValue(null);
     }
 
     /**
@@ -55,6 +72,8 @@ public class Cad_Cli extends javax.swing.JFrame {
         ftxtCpf = new javax.swing.JFormattedTextField();
         lbEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
+        btnLimpar = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -152,6 +171,8 @@ public class Cad_Cli extends javax.swing.JFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        btnCadastrar.setBackground(new java.awt.Color(255, 204, 204));
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_form_add.png"))); // NOI18N
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,49 +204,70 @@ public class Cad_Cli extends javax.swing.JFrame {
 
         lbEmail.setText("Email");
 
+        btnLimpar.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application.png"))); // NOI18N
+        btnLimpar.setText(" Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        btnAtualizar.setBackground(new java.awt.Color(204, 255, 204));
+        btnAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_form_magnify.png"))); // NOI18N
+        btnAtualizar.setText("  Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(20, 20, 20)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbTel)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2)
-                                .addComponent(lbEmail))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(115, 115, 115)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbTel)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(lbEmail))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addGap(10, 10, 10)
+                                                .addComponent(ftxtTel, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(ftxtCpf)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ftxtCel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(ftxtTel, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(ftxtCpf)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(ftxtCel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(313, 313, 313)
-                            .addComponent(btnCadastrar))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(99, 99, 99)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,22 +294,25 @@ public class Cad_Cli extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCadastrar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 21, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
@@ -289,42 +334,86 @@ public class Cad_Cli extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jComboEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboEstadoActionPerformed
-
-        if(jComboEstado.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null, "Selecione outra opção!");
-        }else if(jComboEstado.getSelectedIndex() == 1){
-            jComboCidade.removeAllItems();
-            jComboCidade.addItem("Brasília");
-            jComboCidade.addItem("Ceilândia");
-            jComboCidade.addItem("Samambaia");
-            jComboCidade.addItem("Taguatinga"); 
-        }else if(jComboEstado.getSelectedIndex() == 2){
-            jComboCidade.removeAllItems();
-            jComboCidade.addItem("Duque de Caxias");
-            jComboCidade.addItem("Nova Iguaçu");
-            jComboCidade.addItem("Rio de Janeiro");
-            jComboCidade.addItem("São Gonçalo"); 
-        }else if(jComboEstado.getSelectedIndex() == 3){
-            jComboCidade.removeAllItems();
-            jComboCidade.addItem("Chapeco"); 
-            jComboCidade.addItem("Blumenau");
-            jComboCidade.addItem("Florianópolis");
-            jComboCidade.addItem("Itajaí");
-        }else if(jComboEstado.getSelectedIndex() == 4){
-            jComboCidade.removeAllItems();
-            jComboCidade.addItem("Campinas");
-            jComboCidade.addItem("São Paulo");
-            jComboCidade.addItem("Paulínia");
-            jComboCidade.addItem("Limeira");
-        }else if(jComboEstado.getSelectedIndex() == 5){
-            jComboCidade.removeAllItems();
-            jComboCidade.addItem("Curitiba");
-            jComboCidade.addItem("Foz do Iguaçu"); 
-            jComboCidade.addItem("Maringá");
-            jComboCidade.addItem("Londrina");
+        switch (jComboEstado.getSelectedIndex()) {
+            case 0:
+                jComboCidade.removeAllItems();
+                break;
+            case 1:
+                jComboCidade.removeAllItems();
+                jComboCidade.addItem("Brasília");
+                jComboCidade.addItem("Ceilândia");
+                jComboCidade.addItem("Samambaia");
+                jComboCidade.addItem("Taguatinga");
+                break;
+            case 2:
+                jComboCidade.removeAllItems();
+                jComboCidade.addItem("Duque de Caxias");
+                jComboCidade.addItem("Nova Iguaçu");
+                jComboCidade.addItem("Rio de Janeiro");
+                jComboCidade.addItem("São Gonçalo");
+                break;
+            case 3:
+                jComboCidade.removeAllItems();
+                jComboCidade.addItem("Chapeco");
+                jComboCidade.addItem("Blumenau");
+                jComboCidade.addItem("Florianópolis");
+                jComboCidade.addItem("Itajaí");
+                break;
+            case 4:
+                jComboCidade.removeAllItems();
+                jComboCidade.addItem("Campinas");
+                jComboCidade.addItem("São Paulo");
+                jComboCidade.addItem("Paulínia");
+                jComboCidade.addItem("Limeira");
+                break;
+            case 5:        
+                jComboCidade.removeAllItems();
+                jComboCidade.addItem("Curitiba");
+                jComboCidade.addItem("Foz do Iguaçu");
+                jComboCidade.addItem("Maringá");
+                jComboCidade.addItem("Londrina");
+                break;
+            default:
+                break;
         }
-        
     }//GEN-LAST:event_jComboEstadoActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limpa();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        String nome = txtNome.getText();
+        String tel = ftxtTel.getText();
+        String cel = ftxtCel.getText();
+        String cpf = ftxtCpf.getText();
+        String email = txtEmail.getText();
+        String rua = txtRua.getText();
+        String num = txtNum.getText();
+        String bairro = txtBairro.getText();
+        String cep = ftxtCep.getText();
+        int e = jComboEstado.getSelectedIndex();
+        String estado = jComboEstado.getItemAt(e);
+        int c = jComboCidade.getSelectedIndex();
+        String cidade = jComboCidade.getItemAt(c);
+        
+        if(("".equals(nome)) || ("".equals(tel)) || ("".equals(cel)) || ("".equals(cpf)) || ("".equals(email)) || ("".equals(rua)) || ("".equals(num)) || ("".equals(bairro)) || ("".equals(cep)) || ("".equals(estado)) || ("".equals(cidade))){
+            JOptionPane.showMessageDialog(null, "Informe todos os dados do cliente para atualização!", "Erro", JOptionPane.WARNING_MESSAGE);
+        }else{
+            boolean atualizou = false;
+            try{
+                atualizou = ctrlCliente.atualizarCliente(nome, cpf, cel, tel, cidade, estado, cep, bairro, rua, num, email);
+            } catch(SQLException ex){
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Cad_Cli.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(atualizou){
+                JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                limpa();
+            }
+        }
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,7 +451,9 @@ public class Cad_Cli extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JFormattedTextField ftxtCel;
     private javax.swing.JFormattedTextField ftxtCep;
     private javax.swing.JFormattedTextField ftxtCpf;

@@ -53,7 +53,7 @@ public class Cad_Venda extends javax.swing.JFrame {
         }
         
         try {
-            listProd = ctrlProd.buscaProduto();
+            listProd = ctrlProd.buscarProduto();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Falha ao carregar lista de Produtos. Reinicie a janela!");
         }

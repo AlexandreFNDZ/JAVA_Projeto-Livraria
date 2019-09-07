@@ -8,8 +8,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Produtos;
@@ -22,12 +20,25 @@ public class ConsultaProduto extends javax.swing.JFrame {
     
     ControleProduto ctrlProduto;
     
+    DefaultTableModel dados;
+    
     /**
      * Creates new form ConsultaProduto
      */
     public ConsultaProduto() {
         initComponents();
         ctrlProduto = new ControleProduto();
+        dados = (DefaultTableModel) tbtBusca.getModel();
+    }
+    
+    public void limpa(){
+        txtCodigo.setText("");
+        txtEditora.setText("");
+        txtTitulo.setText("");
+        txtAutor.setText("");
+        jFPreco.setValue(null);
+        jCGenero.setSelectedIndex(0);
+        dados.setNumRows(0);
     }
 
     /**
@@ -60,6 +71,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnExcuir = new javax.swing.JToggleButton();
         btnAtualizar = new javax.swing.JToggleButton();
+        btnLimpar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,10 +81,37 @@ public class ConsultaProduto extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Título", "Autor", "Genero", "Editora", "Valor"
+                "Cod", "Título", "Autor", "Genero", "Editora", "Valor"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbtBusca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbtBuscaMouseClicked(evt);
+            }
+        });
+        tbtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbtBuscaKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbtBusca);
+        if (tbtBusca.getColumnModel().getColumnCount() > 0) {
+            tbtBusca.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tbtBusca.getColumnModel().getColumn(1).setPreferredWidth(180);
+            tbtBusca.getColumnModel().getColumn(2).setPreferredWidth(120);
+            tbtBusca.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tbtBusca.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tbtBusca.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tbtBusca.getColumnModel().getColumn(5).setCellEditor(null);
+        }
 
         btnPesquisar.setBackground(new java.awt.Color(102, 255, 102));
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/accept.png"))); // NOI18N
@@ -201,12 +240,22 @@ public class ConsultaProduto extends javax.swing.JFrame {
             }
         });
 
-        btnAtualizar.setBackground(new java.awt.Color(0, 204, 204));
-        btnAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/arrow_refresh.png"))); // NOI18N
-        btnAtualizar.setText("Atualizar");
+        btnAtualizar.setBackground(new java.awt.Color(102, 204, 255));
+        btnAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/book_next.png"))); // NOI18N
+        btnAtualizar.setText(" Atualizar");
+        btnAtualizar.setActionCommand("Limpar");
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtualizarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application.png"))); // NOI18N
+        btnLimpar.setText("    Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
             }
         });
 
@@ -227,7 +276,8 @@ public class ConsultaProduto extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnExcuir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnAtualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnLimpar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane1)
@@ -250,8 +300,11 @@ public class ConsultaProduto extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26))
         );
 
@@ -269,119 +322,114 @@ public class ConsultaProduto extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         int cod = 0;
-        if(!("".equals(txtCodigo.getText().toString()))){
+        if(!("".equals(txtCodigo.getText()))){
             cod = Integer.parseInt(txtCodigo.getText());
         }
         String editora = txtEditora.getText();
         String titulo = txtTitulo.getText();
         String autor = txtAutor.getText();
         float preco = 0;
-        if(!("".equals(jFPreco.getText().toString()))){
+        if(!("".equals(jFPreco.getText()))){
             preco = Float.parseFloat(jFPreco.getText().replace("R$", "").replace(" ", "").replace(".", "").replace(",", "."));
         }
         int genero = jCGenero.getSelectedIndex();
         
-        DefaultTableModel dados = (DefaultTableModel) tbtBusca.getModel();
         dados.setNumRows(0);
+        
+        //declarando uma variável do tipo moeda aceito
+        BigDecimal valor = new BigDecimal(preco);
+        
+        //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
+        NumberFormat valor2 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         
         if(cod == 0 && ("".equals(editora)) && ("".equals(titulo)) && ("".equals(autor)) && preco == 0 && (genero == 0)){
             try{
-                ArrayList lista = ctrlProduto.buscaProduto();
+                ArrayList lista = ctrlProduto.buscarProduto();
                 Iterator it = lista.iterator();
                 while(it.hasNext()){
                     Produtos prod = (Produtos) it.next();
-                    dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                    dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                 }
             }catch(SQLException ex){
                 ex.printStackTrace();
             }
         }else{
             if(cod > 0){
+                String x = Integer.toString(cod);
                 try{
-                    ArrayList lista = ctrlProduto.buscarProdutoCod(Integer.parseInt(this.txtCodigo.getText()));
+                    ArrayList lista = ctrlProduto.buscarProduto("cod_produto", x);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Produtos prod = (Produtos) it.next();
-                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(!("".equals(editora))){
                 try{
-                    ArrayList lista = ctrlProduto.buscarProdutoEditora(this.txtEditora.getText());
+                    ArrayList lista = ctrlProduto.buscarProduto("editora", editora);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Produtos prod = (Produtos) it.next();
-                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(!("".equals(titulo))){
                 try{
-                    ArrayList lista = ctrlProduto.buscarProdutoTitulo(this.txtTitulo.getText());
+                    ArrayList lista = ctrlProduto.buscarProduto("titulo", titulo);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Produtos prod = (Produtos) it.next();
-                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(!("".equals(autor))){
                 try{
-                    ArrayList lista = ctrlProduto.buscarProdutoAutor(this.txtAutor.getText());
+                    ArrayList lista = ctrlProduto.buscarProduto("autor", autor);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Produtos prod = (Produtos) it.next();
-                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(preco > 0){
+                String x = Float.toString(preco);
                 try{
-                    ArrayList lista = ctrlProduto.buscarProdutoPreco(Float.parseFloat(jFPreco.getText().replace("R$", "").replace(" ", "").replace(".", "").replace(",", ".")));
+                    ArrayList lista = ctrlProduto.buscarProduto("precoUni", x);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Produtos prod = (Produtos) it.next();
-                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if(genero > 0){
-                //String gen = jCGenero.getItemAt(genero);
+                String gen = jCGenero.getItemAt(genero);
                 try{
-                    ArrayList lista = ctrlProduto.buscarProdutoGenero(jCGenero.getItemAt(genero));
+                    ArrayList lista = ctrlProduto.buscarProduto("genero", gen);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Produtos prod = (Produtos) it.next();
-                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), prod.getPrecoUni()});
+                        dados.addRow(new Object[]{prod.getCod_prod(), prod.getTitulo(), prod.getAutor(), prod.getGenero(), prod.getEditora(), valor2.format(prod.getPrecoUni())});
                     }
                 }catch(SQLException ex){
                     ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(ConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -394,12 +442,13 @@ public class ConsultaProduto extends javax.swing.JFrame {
             boolean excluiu = false;
             int cod = Integer.parseInt(tbtBusca.getValueAt(linha, 0).toString());
             try{
-                excluiu = ctrlProduto.excluiProduto(cod);
+                excluiu = ctrlProduto.excluirProduto(cod);
             }catch(SQLException ex){
                 ex.printStackTrace();
             }
             if(excluiu){
                 JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
+                limpa();
             }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione um item para ser removido!");
@@ -408,21 +457,20 @@ public class ConsultaProduto extends javax.swing.JFrame {
 
     private void jFPrecoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFPrecoFocusLost
         //declarando uma variável e pegando o valor da tela
-        String valor = jFPreco.getText();
+        String valor = jFPreco.getText().replace(",", ".");
         
-        //declarando uma variável do tipo moeda aceito
-        BigDecimal valor2 = new BigDecimal(valor);
+        if(!"".equals(valor)){
+            //declarando uma variável do tipo moeda aceito
+            BigDecimal valor2 = new BigDecimal(valor);
         
-        //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
-        NumberFormat valor3 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
+            NumberFormat valor3 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
             
-        if(!"".equals(valor)){       
             //criando uma variável para enviar para a tela
             String valorFormatado = valor3.format(valor2);
             jFPreco.setText(valorFormatado);
         }else{
-            
-            jFPreco.setText(valor);
+            jFPreco.setValue(null);
         }
     }//GEN-LAST:event_jFPrecoFocusLost
 
@@ -431,8 +479,52 @@ public class ConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jFPrecoActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        // TODO add your handling code here:
+        int linha = tbtBusca.getSelectedRow();
+                
+        if(linha != -1){
+            boolean atualizou = false;
+            int cod = Integer.parseInt(tbtBusca.getValueAt(linha, 0).toString());
+            int y = jCGenero.getSelectedIndex();
+            try{
+                atualizou = ctrlProduto.atualizarProduto(Integer.parseInt(txtCodigo.getText()), txtTitulo.getText(), txtAutor.getText(), jCGenero.getItemAt(y), txtEditora.getText(), Float.parseFloat(jFPreco.getText().replace("R$", "").replace(" ", "").replace(".", "").replace(",", ".")));
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            if(atualizou){
+                JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso!", "Atualização", JOptionPane.INFORMATION_MESSAGE);
+                limpa();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione o item a ser atualizado!", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limpa();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void tbtBuscaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbtBuscaKeyPressed
+        
+    }//GEN-LAST:event_tbtBuscaKeyPressed
+
+    private void tbtBuscaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbtBuscaMouseClicked
+        int linha = tbtBusca.getSelectedRow();
+        if (linha > -1) {
+            txtCodigo.setText(dados.getValueAt(linha, 0).toString());
+            txtEditora.setText(dados.getValueAt(linha, 4).toString());
+            txtTitulo.setText(dados.getValueAt(linha, 1).toString());
+            txtAutor.setText(dados.getValueAt(linha, 2).toString());
+            jFPreco.setText(dados.getValueAt(linha, 5).toString());
+            
+            String x = dados.getValueAt(linha, 3).toString();
+            
+            if("Genero".equals(x)) jCGenero.setSelectedIndex(0);
+            if("Romance".equals(x)) jCGenero.setSelectedIndex(1);
+            if("Ficção".equals(x)) jCGenero.setSelectedIndex(2);
+            if("Tragédia".equals(x)) jCGenero.setSelectedIndex(3);
+            if("Comédia".equals(x)) jCGenero.setSelectedIndex(4);
+        }
+    }//GEN-LAST:event_tbtBuscaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -472,6 +564,7 @@ public class ConsultaProduto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAtualizar;
     private javax.swing.JToggleButton btnExcuir;
+    private javax.swing.JToggleButton btnLimpar;
     private javax.swing.JToggleButton btnPesquisar;
     private javax.swing.JComboBox<String> jCGenero;
     private javax.swing.JFormattedTextField jFPreco;

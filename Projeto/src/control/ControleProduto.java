@@ -28,45 +28,27 @@ public class ControleProduto {
         return inseriu;
     }
     
-    public boolean excluiProduto(int cod_produto) throws SQLException{
+    public boolean excluirProduto(int cod_produto) throws SQLException{
         Produtos prod = new Produtos(cod_produto);
         ProdutosDAO prodDAO = new ProdutosDAO();
         boolean excluiu = prodDAO.excluirProduto(prod);
         return excluiu;
     }
     
-    public ArrayList<Produtos> buscaProduto() throws SQLException{
+    public ArrayList<Produtos> buscarProduto() throws SQLException{
         ProdutosDAO prodDAO = new ProdutosDAO();
         return (prodDAO.buscarProduto());
     }
     
-    public ArrayList<Produtos> buscarProdutoCod(int cod_produto) throws SQLException, ClassNotFoundException{
+    public ArrayList<Produtos> buscarProduto(String coluna, String pesquisa) throws SQLException{
         ProdutosDAO prodDAO = new ProdutosDAO();
-        return (prodDAO.buscarProdutoCod(cod_produto));
+        return (prodDAO.buscarProduto(coluna, pesquisa));
     }
     
-    public ArrayList<Produtos> buscarProdutoEditora(String editora) throws SQLException, ClassNotFoundException{
+    public boolean atualizarProduto(int cod_produto, String titulo, String autor, String genero, String editora, float precoUni) throws SQLException{
+        Produtos prod = new Produtos(cod_produto);
         ProdutosDAO prodDAO = new ProdutosDAO();
-        return (prodDAO.buscarProdutoEditora(editora));
-    }
-    
-    public ArrayList<Produtos> buscarProdutoTitulo(String titulo) throws SQLException, ClassNotFoundException{
-        ProdutosDAO prodDAO = new ProdutosDAO();
-        return (prodDAO.buscarProdutoTitulo(titulo));
-    }
-    
-    public ArrayList<Produtos> buscarProdutoAutor(String autor) throws SQLException, ClassNotFoundException{
-        ProdutosDAO prodDAO = new ProdutosDAO();
-        return (prodDAO.buscarProdutoAutor(autor));
-    }
-    
-    public ArrayList<Produtos> buscarProdutoPreco(float preco) throws SQLException, ClassNotFoundException{
-        ProdutosDAO prodDAO = new ProdutosDAO();
-        return (prodDAO.buscarProdutoPreco(preco));
-    }
-    
-    public ArrayList<Produtos> buscarProdutoGenero(String genero) throws SQLException, ClassNotFoundException{
-        ProdutosDAO prodDAO = new ProdutosDAO();
-        return (prodDAO.buscarProdutoGenero(genero));
+        boolean atualizou = prodDAO.atualizarProduto(cod_produto, titulo, autor, genero, editora, precoUni);
+        return atualizou;
     }
 }

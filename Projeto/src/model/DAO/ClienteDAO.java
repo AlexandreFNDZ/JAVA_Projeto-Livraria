@@ -126,15 +126,14 @@ public class ClienteDAO {
         return listaCli;
     }
     
-    public boolean excluirCliente(Cliente cli) throws SQLException {
+    public boolean excluirCliente(int id_cliente) throws SQLException {
         
         boolean excluiu = false;
         
         try {
             con = (Connection) new Conexao().getConnection();
-            String sql = "DELETE FROM cliente WHERE id_cliente = ?";
+            String sql = "DELETE FROM cliente WHERE id_cliente = " + id_cliente ;
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, cli.getId_cliente());
             stmt.execute();
             stmt.close();
             excluiu = true;
@@ -145,5 +144,36 @@ public class ClienteDAO {
         }
         
         return excluiu;
+    }
+    
+    public boolean atualizarCliente(String nome, String cpf, String telefone_cel, String telefone, String cidade, String estado, String cep, String bairro, String rua, String numero, String email) throws SQLException {
+        
+        boolean atualizou = false;
+        try {
+            con = (Connection) new Conexao().getConnection();
+            String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone_cel = ?, telefone = ?, cidade = ?, estado = ? cep = ?, bairro = ?, rua = ?, numero = ?, email = ? WHERE cpf = " + cpf;
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setString(2, cpf);
+            stmt.setString(3, telefone_cel);
+            stmt.setString(4, telefone);
+            stmt.setString(5, cidade);
+            stmt.setString(6, estado);
+            stmt.setString(7, cep);
+            stmt.setString(8, bairro);
+            stmt.setString(9, rua);
+            stmt.setString(10, numero);
+            stmt.setString(11, email);
+            stmt.execute();
+            stmt.close();
+            atualizou = true;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            con.close();
+        }
+        
+        return atualizou;
     }
 }
