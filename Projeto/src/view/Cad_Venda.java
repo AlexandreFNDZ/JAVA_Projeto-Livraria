@@ -9,12 +9,16 @@ package view;
 import control.ControleCliente;
 import control.ControleProduto;
 import java.awt.event.ItemEvent;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import model.bean.Cliente;
 import model.bean.Produtos;
+import model.bean.Venda;
 
 /**
  *
@@ -172,6 +176,11 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         btnInserirCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnInserirCliente.setText("Inserir Cliente");
+        btnInserirCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -407,7 +416,6 @@ public class Cad_Venda extends javax.swing.JFrame {
                 this.txtCpfCli.setText("");
             }
 
-            this.cmbProduto.setEnabled(true);
             this.btnInserirCliente.setEnabled(true);
         }     
     }//GEN-LAST:event_cmbClienteItemStateChanged
@@ -435,6 +443,15 @@ public class Cad_Venda extends javax.swing.JFrame {
             this.btnInserirProd.setEnabled(true);
         } 
     }//GEN-LAST:event_cmbProdutoItemStateChanged
+
+    private void btnInserirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirClienteActionPerformed
+        Cliente cliSelecionado = new Cliente();
+        cliSelecionado = listCli.get(this.cmbCliente.getSelectedIndex()-1);
+        
+        Venda venda = new Venda(cliSelecionado.getId_cliente());
+        
+        this.cmbProduto.setEnabled(true);
+    }//GEN-LAST:event_btnInserirClienteActionPerformed
 
     /**
      * @param args the command line arguments
