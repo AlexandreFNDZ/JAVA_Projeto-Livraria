@@ -11,14 +11,37 @@ import model.bean.Cliente;
  */
 public class ControleCliente {
     
+    private static ControleCliente ctrl = null;
+    
+    public static ControleCliente getInstancia() {
+        if (ctrl == null) {
+            ctrl = new ControleCliente();
+        }
+        
+        return ctrl;
+    }
+    
     public boolean insereCliente(String nome, String cpf, String telefone_cel, String telefone, String cidade, String estado, String cep, String bairro, String rua, String numero, String email) throws SQLException, ClassNotFoundException{
         Cliente cli = new Cliente(nome, cpf, telefone_cel, telefone, cidade, estado, cep, bairro, rua, numero, email);
         ClienteDAO cliDAO = new ClienteDAO();
         boolean inseriu = cliDAO.inserir(cli);
         return inseriu;
     }
-    public Cliente buscarClienteCpf(String cpf) throws SQLException, ClassNotFoundException{
-        ClienteDAO cDaoCpf = new ClienteDAO();
-        return (cDaoCpf.buscaClienteCPF(cpf));
+    
+    public ArrayList<Cliente> buscarCliente() throws SQLException{
+        ClienteDAO cliDAO = new ClienteDAO();
+        return (cliDAO.buscarCliente());
+    }
+    
+    public ArrayList<Cliente> buscarCliente(String coluna, String frame) throws SQLException{
+        ClienteDAO cliDAO = new ClienteDAO();
+        return (cliDAO.buscarCliente(coluna, frame));
+    }
+    
+    public boolean excluiCliente(int id_cliente) throws SQLException{
+        Cliente cli = new Cliente();
+        ClienteDAO cliDAO = new ClienteDAO();
+        boolean excluiu = cliDAO.excluirCliente(cli);
+        return excluiu;
     }
 }
