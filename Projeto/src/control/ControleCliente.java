@@ -22,4 +22,9 @@ public class ControleCliente {
         ClienteDAO cliDAO = new ClienteDAO();
         return (cliDAO.buscarCliente());
     }
+    
+    public ArrayList<Cliente> buscarCliente(String coluna, String frame) throws SQLException{
+        ClienteDAO cliDAO = new ClienteDAO();
+        return (cliDAO.buscarCliente(coluna, frame));
+    }
 }
