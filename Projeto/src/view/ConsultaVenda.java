@@ -7,8 +7,6 @@ package view;
 
 import control.ControleCliente;
 import control.ControleProduto;
-import javax.swing.SpinnerDateModel;
-import model.bean.Cliente;
 
 /**
  *
