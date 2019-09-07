@@ -6,15 +6,69 @@
 
 package view;
 
+import control.ControleCliente;
+import control.ControleProduto;
+import java.awt.event.ItemEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
+import model.bean.Cliente;
+import model.bean.Produtos;
+
 /**
  *
- * @author aluno
+ * @author Alexandre / Elzio / Elias
  */
 public class Cad_Venda extends javax.swing.JFrame {
 
+    ControleCliente ctrlCli;
+    ControleProduto ctrlProd;
+    ArrayList<Produtos> listProd;
+    ArrayList<Cliente> listCli;
     /** Creates new form Cad_Venda */
     public Cad_Venda() {
         initComponents();
+        ctrlCli = ControleCliente.getInstancia();
+        ctrlProd = ControleProduto.getInstancia();
+        
+        try {
+            listCli = ctrlCli.buscarCliente();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao carregar lista de Clientes. Reinicie a janela!");
+        }
+        
+        Iterator itCli = listCli.iterator();
+        while (itCli.hasNext()) {
+            if (this.cmbCliente.getComponentCount() == 0) {
+                this.cmbCliente.addItem("Todos");
+            }
+            
+            Cliente cli = (Cliente) itCli.next();
+            this.cmbCliente.addItem(cli.getNome());
+        }
+        
+        try {
+            listProd = ctrlProd.buscaProduto();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao carregar lista de Produtos. Reinicie a janela!");
+        }
+
+        Iterator itProd = listProd.iterator();
+        while (itProd.hasNext()) {
+            if (this.cmbProduto.getComponentCount() == 0) {
+                this.cmbProduto.addItem("Todos");
+                System.out.println("1");
+            }
+
+            Produtos prod = (Produtos) itProd.next();
+            this.cmbProduto.addItem(prod.getTitulo());
+        }
+        
+        this.btnInserirCliente.setEnabled(false);
+        this.cmbProduto.setEnabled(false);
+        this.btnInserirProd.setEnabled(false);
+        this.txtQtdProd.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -47,13 +101,13 @@ public class Cad_Venda extends javax.swing.JFrame {
         lblQtdProd = new javax.swing.JLabel();
         txtQtdProd = new javax.swing.JTextField();
         btnInserirProd = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnInserirCliente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lblTituloVenda = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnFinalizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -61,7 +115,12 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        cmbProduto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbProdutoItemStateChanged(evt);
+            }
+        });
 
         lblProduto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblProduto.setText("Produto");
@@ -70,10 +129,10 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         lblNomeCli.setText("Nome:");
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbClienteActionPerformed(evt);
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        cmbCliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbClienteItemStateChanged(evt);
             }
         });
 
@@ -111,8 +170,8 @@ public class Cad_Venda extends javax.swing.JFrame {
         btnInserirProd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnInserirProd.setText("Inserir Produto");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton1.setText("Inserir Cliente");
+        btnInserirCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnInserirCliente.setText("Inserir Cliente");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,7 +180,7 @@ public class Cad_Venda extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInserirCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblCliente)
                         .addGap(17, 17, 17)
@@ -178,7 +237,7 @@ public class Cad_Venda extends javax.swing.JFrame {
                     .addComponent(lblCpfCli)
                     .addComponent(txtCpfCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnInserirCliente)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -253,13 +312,13 @@ public class Cad_Venda extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(4).setMaxWidth(70);
         }
 
-        jButton2.setBackground(new java.awt.Color(255, 51, 51));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton2.setText("Excluir");
+        btnExcluir.setBackground(new java.awt.Color(204, 0, 0));
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnExcluir.setText("Excluir");
 
-        jButton3.setBackground(new java.awt.Color(0, 204, 0));
-        jButton3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
-        jButton3.setText("Finalizar");
+        btnFinalizar.setBackground(new java.awt.Color(0, 204, 0));
+        btnFinalizar.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        btnFinalizar.setText("Finalizar");
 
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Selecione o Item para excluir");
@@ -276,11 +335,11 @@ public class Cad_Venda extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3))
+                        .addComponent(btnFinalizar))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -300,12 +359,12 @@ public class Cad_Venda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2))
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -333,9 +392,49 @@ public class Cad_Venda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbClienteActionPerformed
+    private void cmbClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbClienteItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            Cliente cliSelecionado = new Cliente();
+
+            if (this.cmbCliente.getSelectedIndex() != 0) {
+                cliSelecionado = listCli.get(this.cmbCliente.getSelectedIndex()-1);
+
+                this.txtNomeCli.setText(cliSelecionado.getNome());
+                this.txtCpfCli.setText(cliSelecionado.getCpf());
+            } else {
+                this.txtNomeCli.setText("");
+                this.txtCpfCli.setText("");
+            }
+
+            this.cmbProduto.setEnabled(true);
+            this.btnInserirCliente.setEnabled(true);
+        }     
+    }//GEN-LAST:event_cmbClienteItemStateChanged
+
+    private void cmbProdutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbProdutoItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            Produtos prodSelecionado = new Produtos();
+
+            if (this.cmbProduto.getSelectedIndex() != 0) {
+                prodSelecionado = listProd.get(this.cmbProduto.getSelectedIndex()-1);
+                
+                this.txtCodProd.setText(String.valueOf(prodSelecionado.getCod_prod()));
+                this.txtGeneroProd.setText(prodSelecionado.getGenero());
+                this.txtTituloProd.setText(prodSelecionado.getTitulo());
+                this.txtPrecoProd.setText(String.valueOf(prodSelecionado.getPrecoUni()));   
+            } else {
+                this.txtCodProd.setText("");
+                this.txtGeneroProd.setText("");
+                this.txtTituloProd.setText("");
+                this.txtPrecoProd.setText("");
+            }
+
+            this.txtQtdProd.setEnabled(true);
+            this.btnInserirProd.setEnabled(true);
+        } 
+    }//GEN-LAST:event_cmbProdutoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -373,12 +472,12 @@ public class Cad_Venda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFinalizar;
+    private javax.swing.JButton btnInserirCliente;
     private javax.swing.JButton btnInserirProd;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JComboBox<String> cmbProduto;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

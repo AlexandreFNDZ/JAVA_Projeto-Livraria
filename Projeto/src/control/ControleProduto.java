@@ -11,6 +11,16 @@ import model.dao.ProdutosDAO;
  */
 public class ControleProduto {
     
+    private static ControleProduto ctrl = null;
+    
+    public static ControleProduto getInstancia() {
+        if (ctrl == null) {
+            ctrl = new ControleProduto();
+        }
+        
+        return ctrl;
+    }
+    
     public boolean insereProduto(String titulo, String autor, String genero, String editora, float precoUni) throws SQLException{
         Produtos prod = new Produtos(titulo, autor, genero, editora, precoUni);
         ProdutosDAO prodDAO = new ProdutosDAO();
