@@ -32,4 +32,16 @@ public class ControleCliente {
         ClienteDAO cliDAO = new ClienteDAO();
         return (cliDAO.buscarCliente());
     }
+    
+    public ArrayList<Cliente> buscarCliente(String coluna, String frame) throws SQLException{
+        ClienteDAO cliDAO = new ClienteDAO();
+        return (cliDAO.buscarCliente(coluna, frame));
+    }
+    
+    public boolean excluiCliente(int id_cliente) throws SQLException{
+        Cliente cli = new Cliente();
+        ClienteDAO cliDAO = new ClienteDAO();
+        boolean excluiu = cliDAO.excluirCliente(cli);
+        return excluiu;
+    }
 }

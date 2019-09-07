@@ -86,32 +86,64 @@ public class ClienteDAO {
         return listaCli;
     }
     
-    public Cliente buscaClienteCPF(String cpf) throws SQLException, ClassNotFoundException{
-        
-        Cliente cli = new Cliente();      
+    public ArrayList<Cliente> buscarCliente(String coluna, String frame) throws SQLException {
         ResultSet rs = null;
-        try{
+        ArrayList<Cliente> listaCli = new ArrayList<Cliente>();
+        
+        try {
             con = (Connection) new Conexao().getConnection();
-            String sql = "select id_cliente, nome, email, cpf, telefone_cel, telefone, estado, cidade From cliente where cpf = ?";
+            String sql = "SELECT * FROM cliente where " + coluna + " = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, cpf);
+            stmt.setString(1, frame);
+            
             rs = stmt.executeQuery();
-           
-            cli.setId_cliente(rs.getInt("id_cliente"));
-            cli.setCpf(rs.getString("nome"));
-            cli.setCpf(rs.getString("email"));
-            cli.setCpf(rs.getString("cpf"));
-            cli.setCpf(rs.getString("telefone"));
-            cli.setCpf(rs.getString("telefone_cel"));
-            cli.setCpf(rs.getString("celular"));
-            cli.setCpf(rs.getString("estado"));
-            cli.setCpf(rs.getString("ciade"));    
+            
+            while (rs.next()) {
+                Cliente cli = new Cliente();
+                cli.setId_cliente(rs.getInt("id_cliente"));
+                cli.setNome(rs.getString("nome"));
+                cli.setCpf(rs.getString("cpf"));
+                cli.setTelefone_cel(rs.getString("telefone_cel"));
+                cli.setTelefone(rs.getString("telefone"));
+                cli.setCidade(rs.getString("cidade"));
+                cli.setEstado(rs.getString("estado"));
+                cli.setCep(rs.getString("cep"));
+                cli.setBairro(rs.getString("bairro"));
+                cli.setRua(rs.getString("rua"));
+                cli.setNumero(rs.getString("numero"));
+                cli.setEmail(rs.getString("email"));
+                
+                listaCli.add(cli);
+            }
+            
             stmt.close();
-        }catch(SQLException ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             con.close();
-        }        
-        return cli;
+        }
+        
+        return listaCli;
+    }
+    
+    public boolean excluirCliente(Cliente cli) throws SQLException {
+        
+        boolean excluiu = false;
+        
+        try {
+            con = (Connection) new Conexao().getConnection();
+            String sql = "DELETE FROM cliente WHERE id_cliente = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, cli.getId_cliente());
+            stmt.execute();
+            stmt.close();
+            excluiu = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            con.close();
+        }
+        
+        return excluiu;
     }
 }
