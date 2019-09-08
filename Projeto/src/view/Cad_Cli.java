@@ -3,9 +3,11 @@ package view;
 
 import control.ControleCliente;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.bean.Cliente;
 
 /**
  *
@@ -14,13 +16,27 @@ import javax.swing.JOptionPane;
 public class Cad_Cli extends javax.swing.JFrame {
     
     ControleCliente ctrlCliente;
-
+    ArrayList<Cliente> listCli;
+    
+    ConsultaCliente Frame;
+    String cpf = Frame.cpf();
+    
     /**
      * Creates new form Cad_Cli
      */
     public Cad_Cli() {
         initComponents();
         ctrlCliente = new ControleCliente();
+        
+        if(!("".equals(cpf))){
+            try {
+                listCli = ctrlCliente.buscarCliente("cpf", cpf);
+                String nome = listCli.get(0).getNome();
+                txtNome.setText(nome);
+            }catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Falha ao carregar lista de Clientes. Reinicie a janela!");
+            }
+        }     
     }
     
     public void limpa(){
@@ -138,13 +154,13 @@ public class Cad_Cli extends javax.swing.JFrame {
                                 .addGap(78, 78, 78)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboCidade, 0, 120, Short.MAX_VALUE))
+                                .addComponent(jComboCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtRua)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtRua, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblNum)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNum, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNum, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -320,16 +336,34 @@ public class Cad_Cli extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        boolean inseriu = false;
-        try{
-            inseriu = ctrlCliente.insereCliente(this.txtNome.getText(), this.ftxtCpf.getText(), this.ftxtCel.getText(),
-                    this.ftxtTel.getText(),(String)this.jComboCidade.getSelectedItem(), (String)this.jComboEstado.getSelectedItem(), 
-                    this.ftxtCep.getText(), this.txtBairro.getText(), this.txtRua.getText(), this.txtNum.getText(), this.txtEmail.getText()); 
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-        if(inseriu){
-            JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
+        String nome = txtNome.getText();
+        String tel = ftxtTel.getText();
+        String cel = ftxtCel.getText();
+        String cpf = ftxtCpf.getText();
+        String email = txtEmail.getText();
+        String rua = txtRua.getText();
+        String num = txtNum.getText();
+        String bairro = txtBairro.getText();
+        String cep = ftxtCep.getText();
+        int e = jComboEstado.getSelectedIndex();
+        String estado = jComboEstado.getItemAt(e);
+        int c = jComboCidade.getSelectedIndex();
+        String cidade = jComboCidade.getItemAt(c);
+        
+        if(("".equals(nome)) || ("".equals(tel)) || ("".equals(cel)) || ("".equals(cpf)) || ("".equals(email)) || ("".equals(rua)) || ("".equals(num)) || ("".equals(bairro)) || ("".equals(cep)) || ("".equals(estado)) || ("".equals(cidade))){
+            JOptionPane.showMessageDialog(null, "Informe todos os dados do cliente para cadastro!", "Erro", JOptionPane.WARNING_MESSAGE);
+        }else{
+            boolean inseriu = false;
+            try{
+                inseriu = ctrlCliente.insereCliente(this.txtNome.getText(), this.ftxtCpf.getText(), this.ftxtCel.getText(),
+                        this.ftxtTel.getText(),(String)this.jComboCidade.getSelectedItem(), (String)this.jComboEstado.getSelectedItem(), 
+                        this.ftxtCep.getText(), this.txtBairro.getText(), this.txtRua.getText(), this.txtNum.getText(), this.txtEmail.getText()); 
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+            if(inseriu){
+                JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
+            }
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

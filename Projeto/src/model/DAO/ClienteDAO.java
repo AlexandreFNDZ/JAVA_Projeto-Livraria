@@ -151,7 +151,7 @@ public class ClienteDAO {
         boolean atualizou = false;
         try {
             con = (Connection) new Conexao().getConnection();
-            String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone_cel = ?, telefone = ?, cidade = ?, estado = ? cep = ?, bairro = ?, rua = ?, numero = ?, email = ? WHERE cpf = " + cpf;
+            String sql = "UPDATE cliente SET nome = ?, cpf = ?, telefone_cel = ?, telefone = ?, cidade = ?, estado = ?, cep = ?, bairro = ?, rua = ?, numero = ?, email = ? WHERE cpf = '" + cpf + "'";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, nome);
             stmt.setString(2, cpf);

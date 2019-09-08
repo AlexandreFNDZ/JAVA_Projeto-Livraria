@@ -36,6 +36,11 @@ public class ConsultaCliente extends javax.swing.JFrame {
         dados.setNumRows(0);
     }
     
+    public String cpf(){
+        String cpf = Ftxtcpf.getText();
+        return cpf;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -285,7 +290,13 @@ public class ConsultaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesActionPerformed
-        // TODO add your handling code here:
+        int linha = tbtBusca.getSelectedRow();
+
+        if(linha != -1){
+            new Cad_Cli().setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione um item para ver detalhes!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnDetalhesActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
