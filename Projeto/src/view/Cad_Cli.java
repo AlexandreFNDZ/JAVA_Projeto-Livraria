@@ -4,6 +4,7 @@ package view;
 import control.ControleCliente;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,27 +17,37 @@ import model.bean.Cliente;
 public class Cad_Cli extends javax.swing.JFrame {
     
     ControleCliente ctrlCliente;
-    ArrayList<Cliente> listCli;
     
-    ConsultaCliente Frame;
-    String cpf = Frame.cpf();
-    
+    private String cod;
+     
     /**
      * Creates new form Cad_Cli
      */
     public Cad_Cli() {
         initComponents();
         ctrlCliente = new ControleCliente();
-        
-        if(!("".equals(cpf))){
-            try {
-                listCli = ctrlCliente.buscarCliente("cpf", cpf);
-                String nome = listCli.get(0).getNome();
-                txtNome.setText(nome);
-            }catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Falha ao carregar lista de Clientes. Reinicie a janela!");
+    }
+    
+    public void detalhes(String cod){
+        try{
+            ArrayList<Cliente> lista;
+            lista = ctrlCliente.buscarCliente("id_cliente", cod);
+            Iterator it = lista.iterator();
+            while(it.hasNext()){
+                Cliente cli = (Cliente) it.next();
+                txtNome.setText(cli.getNome());
+                ftxtTel.setText(cli.getTelefone());
+                ftxtCel.setValue(cli.getTelefone_cel());
+                ftxtCpf.setValue(cli.getCpf());
+                txtEmail.setText(cli.getEmail());
+                txtRua.setText(cli.getRua());
+                txtNum.setText(cli.getNumero());
+                txtBairro.setText(cli.getBairro());
+                ftxtCep.setValue(cli.getCep());
             }
-        }     
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
     }
     
     public void limpa(){
@@ -199,7 +210,7 @@ public class Cad_Cli extends javax.swing.JFrame {
         jLabel6.setText("Celular");
 
         try {
-            ftxtTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            ftxtTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -396,6 +407,7 @@ public class Cad_Cli extends javax.swing.JFrame {
             case 4:
                 jComboCidade.removeAllItems();
                 jComboCidade.addItem("Campinas");
+                jComboCidade.addItem("Monte Mor");
                 jComboCidade.addItem("São Paulo");
                 jComboCidade.addItem("Paulínia");
                 jComboCidade.addItem("Limeira");

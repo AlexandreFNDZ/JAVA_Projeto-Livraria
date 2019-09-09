@@ -19,7 +19,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
     ControleCliente ctrlCliente;
     
     DefaultTableModel dados;
-    
+      
     /**
      * Creates new form ConsultaCliente
      */   
@@ -34,11 +34,6 @@ public class ConsultaCliente extends javax.swing.JFrame {
         ComboBoxEstado.setSelectedIndex(0);
         Ftxtcpf.setText("");
         dados.setNumRows(0);
-    }
-    
-    public String cpf(){
-        String cpf = Ftxtcpf.getText();
-        return cpf;
     }
     
     /**
@@ -293,7 +288,11 @@ public class ConsultaCliente extends javax.swing.JFrame {
         int linha = tbtBusca.getSelectedRow();
 
         if(linha != -1){
-            new Cad_Cli().setVisible(true);
+            String cod = tbtBusca.getValueAt(linha, 0).toString();
+            Cad_Cli desc = new Cad_Cli();
+            desc.detalhes(cod);
+            desc.setVisible(true);
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Selecione um item para ver detalhes!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -308,7 +307,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
 
         if("".equals(nome) && "Selecione".equals(estado) && "".equals(cpf)){
             try{
-                ArrayList lista = ctrlCliente.buscarCliente();
+                ArrayList<Cliente> lista;
+                lista = ctrlCliente.buscarCliente();
                 Iterator it = lista.iterator();
                 while(it.hasNext()){
                     Cliente cli = (Cliente) it.next();
@@ -320,7 +320,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
         }else{
             if(nome != ""){
                 try{
-                    ArrayList lista = ctrlCliente.buscarCliente("nome", nome);
+                    ArrayList<Cliente> lista;
+                    lista = ctrlCliente.buscarCliente("nome", nome);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Cliente cli = (Cliente) it.next();
@@ -332,7 +333,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
             }
             if(estado != "Selecione"){
                 try{
-                    ArrayList lista = ctrlCliente.buscarCliente("estado", estado);
+                    ArrayList<Cliente> lista;
+                    lista = ctrlCliente.buscarCliente("estado", estado);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Cliente cli = (Cliente) it.next();
@@ -344,7 +346,8 @@ public class ConsultaCliente extends javax.swing.JFrame {
             }
             if(cpf != ""){
                 try{
-                    ArrayList lista = ctrlCliente.buscarCliente("cpf", cpf);
+                    ArrayList<Cliente> lista;
+                    lista = ctrlCliente.buscarCliente("cpf", cpf);
                     Iterator it = lista.iterator();
                     while(it.hasNext()){
                         Cliente cli = (Cliente) it.next();
