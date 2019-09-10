@@ -9,14 +9,19 @@ package view;
 import control.ControleCliente;
 import control.ControleProduto;
 import java.awt.event.ItemEvent;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
+import model.bean.ItemVenda;
 import model.bean.Produtos;
 import model.bean.Venda;
 
@@ -30,11 +35,20 @@ public class Cad_Venda extends javax.swing.JFrame {
     ControleProduto ctrlProd;
     ArrayList<Produtos> listProd;
     ArrayList<Cliente> listCli;
+    
+    float preco = (float) 0.0;
+    
+    Cliente cliSelecionado;
+    Venda venda;
+    ItemVenda item;
+    
+    DefaultTableModel model;
     /** Creates new form Cad_Venda */
     public Cad_Venda() {
         initComponents();
         ctrlCli = ControleCliente.getInstancia();
         ctrlProd = ControleProduto.getInstancia();
+        model = (DefaultTableModel) this.jTable1.getModel();
         
         try {
             listCli = ctrlCli.buscarCliente();
@@ -101,11 +115,11 @@ public class Cad_Venda extends javax.swing.JFrame {
         lblTituloProd = new javax.swing.JLabel();
         txtTituloProd = new javax.swing.JTextField();
         lblPrecoProd = new javax.swing.JLabel();
-        txtPrecoProd = new javax.swing.JTextField();
         lblQtdProd = new javax.swing.JLabel();
         txtQtdProd = new javax.swing.JTextField();
         btnInserirProd = new javax.swing.JButton();
         btnInserirCliente = new javax.swing.JButton();
+        txtPrecoProd = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         lblTituloVenda = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,10 +130,12 @@ public class Cad_Venda extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cmbProduto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbProdutoItemStateChanged(evt);
@@ -133,7 +149,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         lblNomeCli.setText("Nome:");
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cmbCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbClienteItemStateChanged(evt);
@@ -166,13 +182,15 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         lblPrecoProd.setText("Preço Unit.:");
 
-        txtPrecoProd.setEditable(false);
-        txtPrecoProd.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
         lblQtdProd.setText("Qtd.:");
 
         btnInserirProd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnInserirProd.setText("Inserir Produto");
+        btnInserirProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInserirProdActionPerformed(evt);
+            }
+        });
 
         btnInserirCliente.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnInserirCliente.setText("Inserir Cliente");
@@ -181,6 +199,12 @@ public class Cad_Venda extends javax.swing.JFrame {
                 btnInserirClienteActionPerformed(evt);
             }
         });
+
+        txtPrecoProd.setEditable(false);
+        txtPrecoProd.setBorder(null);
+        txtPrecoProd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        txtPrecoProd.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtPrecoProd.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -224,7 +248,7 @@ public class Cad_Venda extends javax.swing.JFrame {
                         .addComponent(lblPrecoProd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPrecoProd, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(10, 10, 10)
                         .addComponent(lblQtdProd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtQtdProd)))
@@ -266,9 +290,9 @@ public class Cad_Venda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPrecoProd)
-                    .addComponent(txtPrecoProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblQtdProd)
-                    .addComponent(txtQtdProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtQtdProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrecoProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnInserirProd)
                 .addContainerGap())
@@ -428,11 +452,24 @@ public class Cad_Venda extends javax.swing.JFrame {
 
             if (this.cmbProduto.getSelectedIndex() != 0) {
                 prodSelecionado = listProd.get(this.cmbProduto.getSelectedIndex()-1);
-                
+                               
                 this.txtCodProd.setText(String.valueOf(prodSelecionado.getCod_prod()));
                 this.txtGeneroProd.setText(prodSelecionado.getGenero());
                 this.txtTituloProd.setText(prodSelecionado.getTitulo());
-                this.txtPrecoProd.setText(String.valueOf(prodSelecionado.getPrecoUni()));   
+                this.txtPrecoProd.setText(String.valueOf(prodSelecionado.getPrecoUni()));
+                this.preco = prodSelecionado.getPrecoUni();
+                     
+                if (!"".equals(txtPrecoProd.getText())) {
+                    System.out.println(txtPrecoProd.getText().replace(",", "."));
+                    BigDecimal preco = new BigDecimal(txtPrecoProd.getText().replace(",", "."));
+                    NumberFormat formatoPreco = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+
+                    String valorFormatado = formatoPreco.format(preco);
+                    this.txtPrecoProd.setText(valorFormatado);
+                } else {
+                    this.txtPrecoProd.setValue(null);
+                }
+                
             } else {
                 this.txtCodProd.setText("");
                 this.txtGeneroProd.setText("");
@@ -446,13 +483,33 @@ public class Cad_Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbProdutoItemStateChanged
 
     private void btnInserirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirClienteActionPerformed
-        Cliente cliSelecionado = new Cliente();
+        cliSelecionado = new Cliente();
         cliSelecionado = listCli.get(this.cmbCliente.getSelectedIndex()-1);
         
-        Venda venda = new Venda(cliSelecionado.getId_cliente());
+        venda = new Venda(cliSelecionado.getId_cliente());
         
         this.cmbProduto.setEnabled(true);
+        
+        this.cmbCliente.setEnabled(false);
+        this.btnInserirCliente.setEnabled(false);
     }//GEN-LAST:event_btnInserirClienteActionPerformed
+
+    private void btnInserirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirProdActionPerformed
+        item = new ItemVenda();
+        
+        item.setCodProd(Integer.parseInt(this.txtCodProd.getText()));
+        item.setPrecoUnit(this.preco);
+        item.setQtd(Integer.parseInt(this.txtQtdProd.getText()));
+                
+        this.model.addRow(new Object[]{item.getCodProd(),this.txtTituloProd.getText(),item.getQtd(),item.getPrecoUnit(),item.getQtd()*item.getPrecoUnit()});
+        
+        this.txtCodProd.setText("");
+        this.txtQtdProd.setText("");
+        this.txtPrecoProd.setText("");
+        this.txtGeneroProd.setText("");
+        this.txtTituloProd.setText("");
+        this.cmbProduto.setSelectedIndex(0);
+    }//GEN-LAST:event_btnInserirProdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -517,7 +574,7 @@ public class Cad_Venda extends javax.swing.JFrame {
     private javax.swing.JTextField txtCpfCli;
     private javax.swing.JTextField txtGeneroProd;
     private javax.swing.JTextField txtNomeCli;
-    private javax.swing.JTextField txtPrecoProd;
+    private javax.swing.JFormattedTextField txtPrecoProd;
     private javax.swing.JTextField txtQtdProd;
     private javax.swing.JTextField txtTituloProd;
     // End of variables declaration//GEN-END:variables
