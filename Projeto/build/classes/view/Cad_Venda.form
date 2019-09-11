@@ -425,8 +425,8 @@
                     <Column editable="false" title="Cod" type="java.lang.Integer"/>
                     <Column editable="false" title="T&#xed;tulo" type="java.lang.String"/>
                     <Column editable="false" title="Qtd" type="java.lang.Integer"/>
-                    <Column editable="false" title="Preco Unit" type="java.lang.Float"/>
-                    <Column editable="false" title="Preco Tot" type="java.lang.Float"/>
+                    <Column editable="false" title="Preco Unit" type="java.lang.String"/>
+                    <Column editable="false" title="Preco Tot" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

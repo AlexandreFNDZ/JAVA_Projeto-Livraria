@@ -110,7 +110,6 @@ public class ConsultaProduto extends javax.swing.JFrame {
             tbtBusca.getColumnModel().getColumn(3).setPreferredWidth(100);
             tbtBusca.getColumnModel().getColumn(4).setPreferredWidth(100);
             tbtBusca.getColumnModel().getColumn(5).setPreferredWidth(100);
-            tbtBusca.getColumnModel().getColumn(5).setCellEditor(null);
         }
 
         btnPesquisar.setBackground(new java.awt.Color(102, 255, 102));

@@ -10,11 +10,8 @@ import control.ControleCliente;
 import control.ControleProduto;
 import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
@@ -312,7 +309,7 @@ public class Cad_Venda extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -460,7 +457,6 @@ public class Cad_Venda extends javax.swing.JFrame {
                 this.preco = prodSelecionado.getPrecoUni();
                      
                 if (!"".equals(txtPrecoProd.getText())) {
-                    System.out.println(txtPrecoProd.getText().replace(",", "."));
                     BigDecimal preco = new BigDecimal(txtPrecoProd.getText().replace(",", "."));
                     NumberFormat formatoPreco = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
 
@@ -495,20 +491,31 @@ public class Cad_Venda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInserirClienteActionPerformed
 
     private void btnInserirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirProdActionPerformed
-        item = new ItemVenda();
-        
-        item.setCodProd(Integer.parseInt(this.txtCodProd.getText()));
-        item.setPrecoUnit(this.preco);
-        item.setQtd(Integer.parseInt(this.txtQtdProd.getText()));
-                
-        this.model.addRow(new Object[]{item.getCodProd(),this.txtTituloProd.getText(),item.getQtd(),item.getPrecoUnit(),item.getQtd()*item.getPrecoUnit()});
-        
-        this.txtCodProd.setText("");
-        this.txtQtdProd.setText("");
-        this.txtPrecoProd.setText("");
-        this.txtGeneroProd.setText("");
-        this.txtTituloProd.setText("");
-        this.cmbProduto.setSelectedIndex(0);
+               
+        if(!"".equals(this.txtQtdProd.getText())){
+            item = new ItemVenda();
+
+            item.setCodProd(Integer.parseInt(this.txtCodProd.getText()));
+            item.setPrecoUnit(this.preco);
+            item.setQtd(Integer.parseInt(this.txtQtdProd.getText()));
+
+            //declarando uma variável do tipo moeda aceito
+            BigDecimal valor = new BigDecimal(preco);
+
+            //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
+            NumberFormat valor2 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+            this.model.addRow(new Object[]{item.getCodProd(),this.txtTituloProd.getText(),item.getQtd(),valor2.format(item.getPrecoUnit()),valor2.format(item.getQtd()*item.getPrecoUnit())});
+
+            this.txtCodProd.setText("");
+            this.txtQtdProd.setText("");
+            this.txtPrecoProd.setText("");
+            this.txtGeneroProd.setText("");
+            this.txtTituloProd.setText("");
+            this.cmbProduto.setSelectedIndex(0);
+        }else{
+            JOptionPane.showMessageDialog(null, "Informe a quantidade!", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnInserirProdActionPerformed
 
     /**
