@@ -49,6 +49,7 @@ public class DetalheVenda extends javax.swing.JFrame {
         lblEnderecoLoja = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lblEmissao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmissao.setText("Emissão:");

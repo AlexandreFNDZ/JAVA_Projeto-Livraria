@@ -3,6 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -53,16 +54,16 @@
                           <Component id="lblBuscaCliente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="cmbBuscaCliente" min="-2" pref="470" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="96" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="395" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnDetalhesVenda" max="32767" attributes="0"/>
-                              <Component id="btnCadastrarVenda" max="32767" attributes="0"/>
-                              <Component id="btnExcluirVenda" alignment="1" max="32767" attributes="0"/>
-                              <Component id="btnEditarVenda" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="441" max="-2" attributes="0"/>
+                          <EmptySpace pref="17" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnEditarVenda" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnCadastrarVenda" alignment="1" pref="159" max="32767" attributes="0"/>
+                              <Component id="btnDetalhesVenda" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnExcluirVenda" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -128,7 +129,7 @@
                           <Component id="btnCadastrarVenda" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnEditarVenda" min="-2" pref="65" max="-2" attributes="0"/>
-                          <EmptySpace pref="18" max="32767" attributes="0"/>
+                          <EmptySpace pref="41" max="32767" attributes="0"/>
                           <Component id="btnExcluirVenda" min="-2" pref="65" max="-2" attributes="0"/>
                       </Group>
                   </Group>

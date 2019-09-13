@@ -38,12 +38,12 @@ public class Eireli extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cadastroVendas = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BookShoos - Java");
+        setTitle("BookStore - Java");
         setResizable(false);
 
-        jPanel1.setBackground(null);
         jPanel1.setLayout(null);
 
         jPanel2.setBackground(new java.awt.Color(102, 0, 153));
@@ -235,6 +235,10 @@ public class Eireli extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(0, 220, 700, 270);
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/2.png"))); // NOI18N
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(450, 80, 240, 260);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -373,6 +377,7 @@ public class Eireli extends javax.swing.JFrame {
     private javax.swing.JLabel consultaProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
