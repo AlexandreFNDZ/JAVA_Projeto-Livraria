@@ -61,6 +61,7 @@ public class Cad_Prod extends javax.swing.JFrame {
         jCGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Romance", "Ficção", "Tragédia", "Comédia" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Produto");
         setResizable(false);
 
         jLabel3.setText("Autor:");
