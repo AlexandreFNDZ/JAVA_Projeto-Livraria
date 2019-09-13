@@ -165,7 +165,7 @@ public class DetalheVenda extends javax.swing.JFrame {
         txtTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         lblNomeLoja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblNomeLoja.setText("Livraria AFK");
+        lblNomeLoja.setText("BookStore");
 
         lblTelLoja.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTelLoja.setText("TEL.: (19)1234-6588");
@@ -263,6 +263,8 @@ public class DetalheVenda extends javax.swing.JFrame {
                     .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lblNomeLoja.getAccessibleContext().setAccessibleName("BookStore");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

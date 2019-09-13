@@ -54,6 +54,7 @@ public class Eireli extends javax.swing.JFrame {
         btnMenuOpe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_form_magnify.png"))); // NOI18N
         btnMenuOpe.setText("Operações");
         btnMenuOpe.setBorder(null);
+        btnMenuOpe.setBorderPainted(false);
         btnMenuOpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMenuOpe.setMaximumSize(new java.awt.Dimension(81, 17));
         btnMenuOpe.setMinimumSize(new java.awt.Dimension(81, 17));
