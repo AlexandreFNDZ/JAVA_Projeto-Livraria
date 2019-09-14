@@ -7,7 +7,9 @@
 package view;
 
 import control.ControleCliente;
+import control.ControleItemVenda;
 import control.ControleProduto;
+import control.ControleVenda;
 import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -15,6 +17,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
@@ -30,14 +34,17 @@ public class Cad_Venda extends javax.swing.JFrame {
 
     ControleCliente ctrlCli;
     ControleProduto ctrlProd;
+    ControleVenda ctrlVenda;
     ArrayList<Produtos> listProd;
     ArrayList<Cliente> listCli;
+    ArrayList<Venda> listVenda;
     
     float preco = (float) 0.0;
     
     Cliente cliSelecionado;
     Venda venda;
-    ItemVenda item;
+    ControleItemVenda ctrlItemVenda;
+    ArrayList<ItemVenda> listItemVenda;
     
     DefaultTableModel model;
     /** Creates new form Cad_Venda */
@@ -357,6 +364,11 @@ public class Cad_Venda extends javax.swing.JFrame {
         btnFinalizar.setBackground(new java.awt.Color(0, 204, 0));
         btnFinalizar.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Selecione o Item para excluir");
@@ -500,7 +512,7 @@ public class Cad_Venda extends javax.swing.JFrame {
     private void btnInserirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirProdActionPerformed
                
         if(!"".equals(this.txtQtdProd.getText()) && !this.txtQtdProd.getText().equals("0")){
-            item = new ItemVenda();
+            ItemVenda item = new ItemVenda();
 
             item.setCodProd(Integer.parseInt(this.txtCodProd.getText()));
             item.setPrecoUnit(this.preco);
@@ -531,6 +543,31 @@ public class Cad_Venda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um item na tabela", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {
+            ctrlVenda.insereVenda(venda.getIdCliente());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        venda = ctrlVenda.buscaVenda(venda.getIdCliente());
+        int linha = 0;
+        
+        while (linha < this.jTable1.getRowCount()) {
+            ItemVenda item = new ItemVenda();
+            item.setCodProd((int) this.jTable1.getValueAt(linha, 0));
+            item.setCodVenda(venda.getCodVenda());
+            item.setPrecoUnit((float) this.jTable1.getValueAt(linha, 3));
+            item.setQtd((int) this.jTable1.getValueAt(linha, 2));
+            this.listItemVenda.add(item);
+            
+            linha++;
+        }
+        
+        ctrlItemVenda.inserirItemVenda(listItemVenda);
+        
+    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     /**
      * @param args the command line arguments
