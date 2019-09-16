@@ -52,6 +52,8 @@ public class Cad_Venda extends javax.swing.JFrame {
         initComponents();
         ctrlCli = ControleCliente.getInstancia();
         ctrlProd = ControleProduto.getInstancia();
+        ctrlVenda = new ControleVenda();
+        ctrlItemVenda = new ControleItemVenda();
         model = (DefaultTableModel) this.jTable1.getModel();
         
         try {
@@ -103,12 +105,12 @@ public class Cad_Venda extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cmbProduto = new javax.swing.JComboBox<>();
+        cmbProduto = new javax.swing.JComboBox<String>();
         lblProduto = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblCpfCli = new javax.swing.JLabel();
         lblNomeCli = new javax.swing.JLabel();
-        cmbCliente = new javax.swing.JComboBox<>();
+        cmbCliente = new javax.swing.JComboBox<String>();
         lblCliente = new javax.swing.JLabel();
         txtNomeCli = new javax.swing.JTextField();
         txtCpfCli = new javax.swing.JTextField();
@@ -139,7 +141,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
         cmbProduto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbProdutoItemStateChanged(evt);
@@ -156,7 +158,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         lblNomeCli.setText("Nome:");
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
         cmbCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbClienteItemStateChanged(evt);
@@ -546,19 +548,22 @@ public class Cad_Venda extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         try {
-            ctrlVenda.insereVenda(venda.getIdCliente());
-        } catch (SQLException ex) {
+            ctrlVenda.insereVenda(this.venda.getIdCliente());
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         
-        venda = ctrlVenda.buscaVenda(venda.getIdCliente());
+        venda = ctrlVenda.buscaVenda(this.venda.getIdCliente());
         int linha = 0;
+        listItemVenda = new ArrayList<>();
         
         while (linha < this.jTable1.getRowCount()) {
             ItemVenda item = new ItemVenda();
             item.setCodProd((int) this.jTable1.getValueAt(linha, 0));
             item.setCodVenda(venda.getCodVenda());
-            item.setPrecoUnit((float) this.jTable1.getValueAt(linha, 3));
+            String preco = (String) this.jTable1.getValueAt(linha, 3);
+            preco = preco.replace(",", ".");
+            item.setPrecoUnit(Float.parseFloat(preco.substring(3,preco.length())));
             item.setQtd((int) this.jTable1.getValueAt(linha, 2));
             this.listItemVenda.add(item);
             
@@ -567,6 +572,8 @@ public class Cad_Venda extends javax.swing.JFrame {
         
         ctrlItemVenda.inserirItemVenda(listItemVenda);
         
+        JOptionPane.showMessageDialog(null, "Venda Cadastrada com Sucesso!");
+        this.dispose();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     /**

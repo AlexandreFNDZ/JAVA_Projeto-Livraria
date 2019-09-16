@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/control/ControleItemVenda.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/control/ControleCliente.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/control/ControleVenda.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/model/bean/Venda.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/model/DAO/ItemVendaDAO.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/model/DAO/VendaDAO.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/view/Cad_Venda.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/model/bean/ItemVenda.java</file>
-            <file>file:/C:/Users/aluno/Desktop/java/Projeto_Java/Projeto/src/model/DAO/ClienteDAO.java</file>
+            <file>file:/C:/Users/alexa/Desktop/Projeto_Java/Projeto/src/control/ControleCliente.java</file>
+            <file>file:/C:/Users/alexa/Desktop/Projeto_Java/Projeto/src/control/ControleItemVenda.java</file>
+            <file>file:/C:/Users/alexa/Desktop/Projeto_Java/Projeto/src/control/ControleProduto.java</file>
+            <file>file:/C:/Users/alexa/Desktop/Projeto_Java/Projeto/src/control/ControleVenda.java</file>
+            <file>file:/C:/Users/alexa/Desktop/Projeto_Java/Projeto/src/model/DAO/ProdutosDAO.java</file>
+            <file>file:/C:/Users/alexa/Desktop/Projeto_Java/Projeto/src/view/Cad_Venda.java</file>
         </group>
     </open-files>
 </project-private>
