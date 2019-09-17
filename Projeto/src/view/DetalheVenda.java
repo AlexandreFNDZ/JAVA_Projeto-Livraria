@@ -50,6 +50,7 @@ public class DetalheVenda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         lblEmissao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmissao.setText("Emissão:");
@@ -263,8 +264,6 @@ public class DetalheVenda extends javax.swing.JFrame {
                     .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        lblNomeLoja.getAccessibleContext().setAccessibleName("BookStore");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

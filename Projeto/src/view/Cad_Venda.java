@@ -65,7 +65,7 @@ public class Cad_Venda extends javax.swing.JFrame {
         Iterator itCli = listCli.iterator();
         while (itCli.hasNext()) {
             if (this.cmbCliente.getComponentCount() == 0) {
-                this.cmbCliente.addItem("Todos");
+                this.cmbCliente.addItem("Selecione");
             }
             
             Cliente cli = (Cliente) itCli.next();
@@ -81,7 +81,7 @@ public class Cad_Venda extends javax.swing.JFrame {
         Iterator itProd = listProd.iterator();
         while (itProd.hasNext()) {
             if (this.cmbProduto.getComponentCount() == 0) {
-                this.cmbProduto.addItem("Todos");
+                this.cmbProduto.addItem("Selecione");
                 System.out.println("1");
             }
 
@@ -553,7 +553,7 @@ public class Cad_Venda extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         
-        venda = ctrlVenda.buscaVenda(this.venda.getIdCliente());
+        venda = ctrlVenda.buscaVenda("id_cliente", this.venda.getIdCliente());
         int linha = 0;
         listItemVenda = new ArrayList<>();
         

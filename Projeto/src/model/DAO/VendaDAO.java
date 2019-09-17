@@ -79,13 +79,13 @@ public class VendaDAO {
         return listaVenda;
     }
     
-    public Venda buscar(int idCli) throws SQLException {
+    public Venda buscar(String coluna, int value) throws SQLException {
         ResultSet rs = null;
         Venda vendaCriada = new Venda();
         
         try {
             con = (Connection) new Conexao().getConnection();
-            String sql = "SELECT * FROM venda WHERE id_cliente = " + idCli;
+            String sql = "SELECT * FROM venda WHERE " + coluna + " = " + value;
             PreparedStatement stmt = con.prepareStatement(sql);
             
             rs = stmt.executeQuery();
@@ -108,13 +108,13 @@ public class VendaDAO {
         
         return vendaCriada;
     }
-    
-    public boolean excluir(Venda venda) throws SQLException {
+        
+    public boolean excluir(int codVenda) throws SQLException {
         boolean excluiu = false;
         
         try {
             con = (Connection) new Conexao().getConnection();
-            String sql = "DELETE FROM venda WHERE cod_venda = " + venda.getIdCliente();
+            String sql = "DELETE FROM venda WHERE cod_venda = " + codVenda;
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.execute();
             stmt.close();
