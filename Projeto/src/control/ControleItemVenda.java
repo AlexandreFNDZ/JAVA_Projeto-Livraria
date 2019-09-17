@@ -5,10 +5,12 @@
  */
 package control;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import model.DAO.ItemVendaDAO;
 import model.bean.ItemVenda;
+import model.bean.Venda;
 
 /**
  *
@@ -33,5 +35,12 @@ public class ControleItemVenda {
         }
          
         return inseriu;
+    }
+    
+    public ArrayList<ItemVenda> buscaItem(int codVenda) throws SQLException, ClassNotFoundException {
+        ArrayList<ItemVenda> itens = new ArrayList<>();
+        ItemVendaDAO itemSQL = new ItemVendaDAO();
+        
+        return itemSQL.buscarItens(codVenda);
     }
 }
