@@ -36,6 +36,10 @@ public class ConsultaVenda extends javax.swing.JFrame {
      */
     public ConsultaVenda() {
         initComponents();
+        
+        this.cmbBuscaAno.setEnabled(false);
+        this.cmbBuscaMes.setEnabled(false);
+        
         ctrlCli = ControleCliente.getInstancia();
         ctrlProd = ControleProduto.getInstancia();
         ctrlVenda = new ControleVenda();
@@ -201,11 +205,9 @@ public class ConsultaVenda extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnDetalhesVenda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnDetalhesVenda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnCadastrarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -353,7 +355,16 @@ public class ConsultaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarVendaActionPerformed
 
     private void btnDetalhesVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalhesVendaActionPerformed
-        new DetalheVenda().setVisible(true);
+        int index = this.jTable1.getSelectedRow();
+        
+        if (index == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um item na tabela");
+            return;
+        }
+        
+        int codVenda = (int) this.jTable1.getValueAt(index, 0);
+        
+        new DetalheVenda(codVenda).setVisible(true);
     }//GEN-LAST:event_btnDetalhesVendaActionPerformed
 
     /**
