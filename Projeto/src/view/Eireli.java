@@ -38,6 +38,7 @@ public class Eireli extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         consultaVendas = new javax.swing.JLabel();
         cadastroVendas = new javax.swing.JLabel();
+        consultaVendas = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -55,6 +56,7 @@ public class Eireli extends javax.swing.JFrame {
         btnMenuOpe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/application_form_magnify.png"))); // NOI18N
         btnMenuOpe.setText("Operações");
         btnMenuOpe.setBorder(null);
+        btnMenuOpe.setBorderPainted(false);
         btnMenuOpe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMenuOpe.setMaximumSize(new java.awt.Dimension(81, 17));
         btnMenuOpe.setMinimumSize(new java.awt.Dimension(81, 17));
@@ -244,6 +246,21 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoVendas.add(cadastroVendas);
         cadastroVendas.setBounds(10, 50, 120, 30);
 
+        consultaVendas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        consultaVendas.setForeground(new java.awt.Color(255, 255, 255));
+        consultaVendas.setText("Consulta");
+        consultaVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        consultaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consultaVendasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                consultaVendasMouseEntered(evt);
+            }
+        });
+        jPanelEscondidoVendas.add(consultaVendas);
+        consultaVendas.setBounds(10, 90, 80, 15);
+
         jPanel1.add(jPanelEscondidoVendas);
         jPanelEscondidoVendas.setBounds(140, 50, 140, 10);
 
@@ -355,6 +372,15 @@ public class Eireli extends javax.swing.JFrame {
     private void cadastroVendasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroVendasMouseEntered
         jPanelEscondidoVendas.setSize(140, 120);
     }//GEN-LAST:event_cadastroVendasMouseEntered
+
+    private void consultaVendasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseEntered
+        jPanelEscondidoVendas.setSize(140, 120);
+    }//GEN-LAST:event_consultaVendasMouseEntered
+
+    private void consultaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseClicked
+        new ConsultaVenda().setVisible(true);
+        jPanelEscondidoVendas.setSize(140, 120);
+    }//GEN-LAST:event_consultaVendasMouseClicked
 
     /**
      * @param args the command line arguments

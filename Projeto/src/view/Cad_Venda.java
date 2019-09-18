@@ -7,7 +7,9 @@
 package view;
 
 import control.ControleCliente;
+import control.ControleItemVenda;
 import control.ControleProduto;
+import control.ControleVenda;
 import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -15,6 +17,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
@@ -30,14 +34,17 @@ public class Cad_Venda extends javax.swing.JFrame {
 
     ControleCliente ctrlCli;
     ControleProduto ctrlProd;
+    ControleVenda ctrlVenda;
     ArrayList<Produtos> listProd;
     ArrayList<Cliente> listCli;
+    ArrayList<Venda> listVenda;
     
     float preco = (float) 0.0;
     
     Cliente cliSelecionado;
     Venda venda;
-    ItemVenda item;
+    ControleItemVenda ctrlItemVenda;
+    ArrayList<ItemVenda> listItemVenda;
     
     DefaultTableModel model;
     /** Creates new form Cad_Venda */
@@ -45,6 +52,8 @@ public class Cad_Venda extends javax.swing.JFrame {
         initComponents();
         ctrlCli = ControleCliente.getInstancia();
         ctrlProd = ControleProduto.getInstancia();
+        ctrlVenda = new ControleVenda();
+        ctrlItemVenda = new ControleItemVenda();
         model = (DefaultTableModel) this.jTable1.getModel();
         
         try {
@@ -56,7 +65,7 @@ public class Cad_Venda extends javax.swing.JFrame {
         Iterator itCli = listCli.iterator();
         while (itCli.hasNext()) {
             if (this.cmbCliente.getComponentCount() == 0) {
-                this.cmbCliente.addItem("Todos");
+                this.cmbCliente.addItem("Selecione");
             }
             
             Cliente cli = (Cliente) itCli.next();
@@ -72,7 +81,7 @@ public class Cad_Venda extends javax.swing.JFrame {
         Iterator itProd = listProd.iterator();
         while (itProd.hasNext()) {
             if (this.cmbProduto.getComponentCount() == 0) {
-                this.cmbProduto.addItem("Todos");
+                this.cmbProduto.addItem("Selecione");
                 System.out.println("1");
             }
 
@@ -96,12 +105,12 @@ public class Cad_Venda extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cmbProduto = new javax.swing.JComboBox<>();
+        cmbProduto = new javax.swing.JComboBox<String>();
         lblProduto = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblCpfCli = new javax.swing.JLabel();
         lblNomeCli = new javax.swing.JLabel();
-        cmbCliente = new javax.swing.JComboBox<>();
+        cmbCliente = new javax.swing.JComboBox<String>();
         lblCliente = new javax.swing.JLabel();
         txtNomeCli = new javax.swing.JTextField();
         txtCpfCli = new javax.swing.JTextField();
@@ -132,7 +141,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
         cmbProduto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbProdutoItemStateChanged(evt);
@@ -142,11 +151,14 @@ public class Cad_Venda extends javax.swing.JFrame {
         lblProduto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblProduto.setText("Produto");
 
+        jSeparator1.setToolTipText("");
+        jSeparator1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         lblCpfCli.setText("CPF / CNPJ:");
 
         lblNomeCli.setText("Nome:");
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
         cmbCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbClienteItemStateChanged(evt);
@@ -258,19 +270,19 @@ public class Cad_Venda extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCliente))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNomeCli)
                     .addComponent(txtNomeCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCpfCli)
                     .addComponent(txtCpfCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addComponent(btnInserirCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(76, 76, 76)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProduto)
                     .addComponent(cmbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -297,7 +309,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblTituloVenda.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        lblTituloVenda.setFont(new java.awt.Font("Gentium Basic", 2, 36)); // NOI18N
         lblTituloVenda.setText("Tabela de Vendas");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -345,10 +357,20 @@ public class Cad_Venda extends javax.swing.JFrame {
         btnExcluir.setBackground(new java.awt.Color(204, 0, 0));
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnFinalizar.setBackground(new java.awt.Color(0, 204, 0));
         btnFinalizar.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Selecione o Item para excluir");
@@ -361,38 +383,37 @@ public class Cad_Venda extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFinalizar))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFinalizar))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(95, 95, 95)
+                        .addComponent(lblTituloVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblTituloVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTituloVenda)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel2))
                     .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -407,7 +428,7 @@ public class Cad_Venda extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,15 +513,12 @@ public class Cad_Venda extends javax.swing.JFrame {
 
     private void btnInserirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirProdActionPerformed
                
-        if(!"".equals(this.txtQtdProd.getText())){
-            item = new ItemVenda();
+        if(!"".equals(this.txtQtdProd.getText()) && !this.txtQtdProd.getText().equals("0")){
+            ItemVenda item = new ItemVenda();
 
             item.setCodProd(Integer.parseInt(this.txtCodProd.getText()));
             item.setPrecoUnit(this.preco);
             item.setQtd(Integer.parseInt(this.txtQtdProd.getText()));
-
-            //declarando uma variável do tipo moeda aceito
-            BigDecimal valor = new BigDecimal(preco);
 
             //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
             NumberFormat valor2 = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
@@ -514,9 +532,49 @@ public class Cad_Venda extends javax.swing.JFrame {
             this.txtTituloProd.setText("");
             this.cmbProduto.setSelectedIndex(0);
         }else{
-            JOptionPane.showMessageDialog(null, "Informe a quantidade!", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informe uma quantidade válida!", "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnInserirProdActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int index = this.jTable1.getSelectedRow();
+        
+        try {
+            this.model.removeRow(index);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Selecione um item na tabela", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {
+            ctrlVenda.insereVenda(this.venda.getIdCliente());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        venda = ctrlVenda.buscaVenda("id_cliente", this.venda.getIdCliente());
+        int linha = 0;
+        listItemVenda = new ArrayList<>();
+        
+        while (linha < this.jTable1.getRowCount()) {
+            ItemVenda item = new ItemVenda();
+            item.setCodProd((int) this.jTable1.getValueAt(linha, 0));
+            item.setCodVenda(venda.getCodVenda());
+            String preco = (String) this.jTable1.getValueAt(linha, 3);
+            preco = preco.replace(",", ".");
+            item.setPrecoUnit(Float.parseFloat(preco.substring(3,preco.length())));
+            item.setQtd((int) this.jTable1.getValueAt(linha, 2));
+            this.listItemVenda.add(item);
+            
+            linha++;
+        }
+        
+        ctrlItemVenda.inserirItemVenda(listItemVenda);
+        
+        JOptionPane.showMessageDialog(null, "Venda Cadastrada com Sucesso!");
+        this.dispose();
+    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     /**
      * @param args the command line arguments

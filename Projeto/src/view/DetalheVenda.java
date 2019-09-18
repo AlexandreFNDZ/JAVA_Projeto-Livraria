@@ -5,17 +5,101 @@
  */
 package view;
 
+import control.ControleCliente;
+import control.ControleItemVenda;
+import control.ControleProduto;
+import control.ControleVenda;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Cliente;
+import model.bean.ItemVenda;
+import model.bean.Produtos;
+import model.bean.Venda;
+
 /**
  *
  * @author aluno
  */
 public class DetalheVenda extends javax.swing.JFrame {
 
+    ControleVenda ctrlVenda;
+    ControleItemVenda ctrlItemVenda;
+    ControleProduto ctrlProd;
+    ControleCliente ctrlCli;
+    Venda venda;
+    DefaultTableModel model;
+    
+    ArrayList<ItemVenda> itens;
+    ArrayList<Produtos> listProd;
+    Cliente cliente;
     /**
      * Creates new form ConsultaVenda
      */
     public DetalheVenda() {
         initComponents();
+    }
+    
+    public DetalheVenda(int codVenda) {
+        initComponents();
+        ctrlVenda = new ControleVenda();
+        ctrlItemVenda = new ControleItemVenda();
+        ctrlProd = ControleProduto.getInstancia();
+        ctrlCli = ControleCliente.getInstancia();
+        venda = ctrlVenda.buscaVenda("cod_venda", codVenda);
+        itens = new ArrayList<>();
+        listProd = new ArrayList<>();
+        cliente = new Cliente();
+        model = (DefaultTableModel) this.jTable1.getModel();
+        
+        try {
+            itens = ctrlItemVenda.buscaItem(codVenda);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        float somaTotal = 0;
+        
+        Iterator it = itens.iterator();
+        while (it.hasNext()) {
+            ItemVenda itemVenda = new ItemVenda();
+            itemVenda = (ItemVenda) it.next();
+            Produtos prod = new Produtos();
+            
+            try {
+                listProd = ctrlProd.buscarProduto("cod_produto", String.valueOf(itemVenda.getCodProd()));
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+            Iterator itProd = listProd.iterator();
+            
+            while (itProd.hasNext()) {
+                prod = (Produtos) itProd.next();
+            }
+            
+            model.addRow(new Object[] {itemVenda.getQtd(),prod.getTitulo(),prod.getAutor(),itemVenda.getPrecoUnit(),itemVenda.getPrecoUnit()*itemVenda.getQtd()});
+            
+            somaTotal += (itemVenda.getPrecoUnit()*itemVenda.getQtd());
+        }
+        
+        try {
+            cliente = ctrlCli.buscarCliente("id_cliente", venda.getIdCliente());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        this.txtTotal.setText(String.valueOf(somaTotal));
+        this.txtEmissao.setText(venda.getDataVenda());
+        this.lblVendaId.setText("N° " + venda.getCodVenda());
+        this.txtCpf.setText(cliente.getCpf());
+        this.txtEndereco.setText(cliente.getRua() + ", " + cliente.getNumero() + " - " + cliente.getBairro() + " - " + cliente.getCidade() + "/" + cliente.getEstado());
+        this.txtNome.setText(cliente.getNome());
     }
 
     /**
@@ -50,6 +134,7 @@ public class DetalheVenda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         lblEmissao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblEmissao.setText("Emissão:");
@@ -76,17 +161,10 @@ public class DetalheVenda extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Qtd", "Descrição", "Un", "Valor Un", "Valor Tot"
+                "Qtd", "Descrição", "Autor", "Valor Un", "Valor Tot"
             }
         ) {
             Class[] types = new Class [] {
@@ -110,12 +188,12 @@ public class DetalheVenda extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setMinWidth(50);
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(340);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(340);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(340);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(50);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(300);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(300);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(90);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(90);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(90);
             jTable1.getColumnModel().getColumn(3).setMinWidth(75);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(75);
             jTable1.getColumnModel().getColumn(3).setMaxWidth(75);
@@ -165,7 +243,7 @@ public class DetalheVenda extends javax.swing.JFrame {
         txtTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         lblNomeLoja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblNomeLoja.setText("Livraria AFK");
+        lblNomeLoja.setText("BookStore");
 
         lblTelLoja.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblTelLoja.setText("TEL.: (19)1234-6588");
@@ -199,7 +277,7 @@ public class DetalheVenda extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblEmissao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblVendaId)
                         .addGap(88, 88, 88))

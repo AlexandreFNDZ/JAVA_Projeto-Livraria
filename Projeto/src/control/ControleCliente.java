@@ -2,6 +2,7 @@ package control;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import model.DAO.ClienteDAO;
 import model.bean.Cliente;
 
@@ -36,6 +37,20 @@ public class ControleCliente {
     public ArrayList<Cliente> buscarCliente(String coluna, String frame) throws SQLException{
         ClienteDAO cliDAO = new ClienteDAO();
         return (cliDAO.buscarCliente(coluna, frame));
+    }
+    
+    public Cliente buscarCliente(String coluna, int idCli) throws SQLException{
+        ClienteDAO cliDAO = new ClienteDAO();
+        ArrayList listCli = new ArrayList<>();
+        Cliente resultCli = new Cliente();
+        
+        listCli = cliDAO.buscarCliente(coluna, String.valueOf(idCli));
+        Iterator it = listCli.iterator();
+        while (it.hasNext()) {
+            resultCli = (Cliente) it.next();
+        }
+        
+        return resultCli;
     }
     
     public boolean excluirCliente(int id_cliente) throws SQLException{
