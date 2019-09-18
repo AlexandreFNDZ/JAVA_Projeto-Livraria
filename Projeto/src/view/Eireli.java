@@ -339,10 +339,10 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoCad.setSize(0, 0);
     }//GEN-LAST:event_consultaProdutoMouseClicked
 
-    private void consultaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseClicked
+    private void consultaVendasMouseClicked(java.awt.event.MouseEvent evt) {                                            
         new ConsultaVenda().setVisible(true);
         jPanelEscondidoVendas.setSize(0, 0);
-    }//GEN-LAST:event_consultaVendasMouseClicked
+    }                                           
 
     private void cadastroClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroClienteMouseEntered
         jPanelEscondidoCad.setSize(170, 200);
@@ -360,9 +360,9 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoCad.setSize(170, 200);
     }//GEN-LAST:event_consultaProdutoMouseEntered
 
-    private void consultaVendasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseEntered
+    private void consultaVendasMouseEntered(java.awt.event.MouseEvent evt) {                                            
         jPanelEscondidoVendas.setSize(140, 120);
-    }//GEN-LAST:event_consultaVendasMouseEntered
+    }                                           
 
     private void cadastroVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroVendasMouseClicked
         new Cad_Venda().setVisible(true);
