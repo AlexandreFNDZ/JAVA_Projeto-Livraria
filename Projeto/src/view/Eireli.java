@@ -36,9 +36,8 @@ public class Eireli extends javax.swing.JFrame {
         consultaProduto = new javax.swing.JLabel();
         jPanelEscondidoVendas = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        consultaVendas = new javax.swing.JLabel();
         cadastroVendas = new javax.swing.JLabel();
-        consultaVendas = new javax.swing.JLabel();
+        consultaVendas1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -216,21 +215,6 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoVendas.add(jLabel4);
         jLabel4.setBounds(10, 10, 102, 33);
 
-        consultaVendas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        consultaVendas.setForeground(new java.awt.Color(255, 255, 255));
-        consultaVendas.setText("Consulta");
-        consultaVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        consultaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                consultaVendasMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                consultaVendasMouseEntered(evt);
-            }
-        });
-        jPanelEscondidoVendas.add(consultaVendas);
-        consultaVendas.setBounds(10, 80, 120, 30);
-
         cadastroVendas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cadastroVendas.setForeground(new java.awt.Color(255, 255, 255));
         cadastroVendas.setText("Cadastro");
@@ -246,11 +230,11 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoVendas.add(cadastroVendas);
         cadastroVendas.setBounds(10, 50, 120, 30);
 
-        consultaVendas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        consultaVendas.setForeground(new java.awt.Color(255, 255, 255));
-        consultaVendas.setText("Consulta");
-        consultaVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        consultaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+        consultaVendas1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        consultaVendas1.setForeground(new java.awt.Color(255, 255, 255));
+        consultaVendas1.setText("Consulta");
+        consultaVendas1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        consultaVendas1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 consultaVendasMouseClicked(evt);
             }
@@ -258,8 +242,8 @@ public class Eireli extends javax.swing.JFrame {
                 consultaVendasMouseEntered(evt);
             }
         });
-        jPanelEscondidoVendas.add(consultaVendas);
-        consultaVendas.setBounds(10, 90, 80, 15);
+        jPanelEscondidoVendas.add(consultaVendas1);
+        consultaVendas1.setBounds(10, 90, 80, 15);
 
         jPanel1.add(jPanelEscondidoVendas);
         jPanelEscondidoVendas.setBounds(140, 50, 140, 10);
@@ -338,12 +322,7 @@ public class Eireli extends javax.swing.JFrame {
         new ConsultaProduto().setVisible(true);
         jPanelEscondidoCad.setSize(0, 0);
     }//GEN-LAST:event_consultaProdutoMouseClicked
-
-    private void consultaVendasMouseClicked(java.awt.event.MouseEvent evt) {                                            
-        new ConsultaVenda().setVisible(true);
-        jPanelEscondidoVendas.setSize(0, 0);
-    }                                           
-
+                                          
     private void cadastroClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroClienteMouseEntered
         jPanelEscondidoCad.setSize(170, 200);
     }//GEN-LAST:event_cadastroClienteMouseEntered
@@ -359,10 +338,7 @@ public class Eireli extends javax.swing.JFrame {
     private void consultaProdutoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaProdutoMouseEntered
         jPanelEscondidoCad.setSize(170, 200);
     }//GEN-LAST:event_consultaProdutoMouseEntered
-
-    private void consultaVendasMouseEntered(java.awt.event.MouseEvent evt) {                                            
-        jPanelEscondidoVendas.setSize(140, 120);
-    }                                           
+                                           
 
     private void cadastroVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroVendasMouseClicked
         new Cad_Venda().setVisible(true);
@@ -379,7 +355,7 @@ public class Eireli extends javax.swing.JFrame {
 
     private void consultaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseClicked
         new ConsultaVenda().setVisible(true);
-        jPanelEscondidoVendas.setSize(140, 120);
+        jPanelEscondidoVendas.setSize(0, 0);
     }//GEN-LAST:event_consultaVendasMouseClicked
 
     /**
@@ -426,7 +402,7 @@ public class Eireli extends javax.swing.JFrame {
     private javax.swing.JLabel cadastroVendas;
     private javax.swing.JLabel consultaCliente;
     private javax.swing.JLabel consultaProduto;
-    private javax.swing.JLabel consultaVendas;
+    private javax.swing.JLabel consultaVendas1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

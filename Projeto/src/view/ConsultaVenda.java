@@ -8,11 +8,20 @@ package view;
 import control.ControleCliente;
 import control.ControleProduto;
 import control.ControleVenda;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import static java.time.LocalDate.now;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.chart.PieChart.Data;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
@@ -61,6 +70,14 @@ public class ConsultaVenda extends javax.swing.JFrame {
             Cliente cli = (Cliente) itCli.next();
             this.cmbBuscaCliente.addItem(cli.getNome());
         }
+    }
+    
+    public void limpa(){
+        this.txtNumVenda.setText("");
+        this.cmbBuscaCliente.setSelectedIndex(0);
+        this.cmbBuscaAno.setSelectedIndex(0);
+        this.cmbBuscaMes.setSelectedIndex(0);
+        this.model.setNumRows(0);
     }
 
     /**
@@ -208,9 +225,8 @@ public class ConsultaVenda extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnDetalhesVenda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnCadastrarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(btnCadastrarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(160, 160, 160)
@@ -289,12 +305,19 @@ public class ConsultaVenda extends javax.swing.JFrame {
         if (resultVendas.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Não há vendas cadastradas!");
             return;
-        }
-        
+        }  
+       
+        //Máscara de data
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd / MMMM / yy");
+                
         Iterator it = resultVendas.iterator();
         while (it.hasNext()) {
             Venda registro = new Venda();
             registro = (Venda) it.next();
+            
+            //Pegando a data do BD e formatando no padrão local
+            LocalDate data = LocalDate.parse(registro.getDataVenda().substring(0, 10));
+            String dataFormatada = data.format(formato);
             
             Cliente cli = new Cliente();
             
@@ -312,7 +335,7 @@ public class ConsultaVenda extends javax.swing.JFrame {
                 Logger.getLogger(ConsultaVenda.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            this.model.addRow(new Object[]{registro.getCodVenda(), cli.getNome(), registro.getDataVenda()});
+            this.model.addRow(new Object[]{registro.getCodVenda(), cli.getNome(), dataFormatada});
         }
         
         if (this.model.getRowCount() == 0) {
@@ -321,11 +344,7 @@ public class ConsultaVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        this.txtNumVenda.setText("");
-        this.cmbBuscaCliente.setSelectedIndex(0);
-        this.cmbBuscaAno.setSelectedIndex(0);
-        this.cmbBuscaMes.setSelectedIndex(0);
-        this.model.setNumRows(0);
+        limpa();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnExcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirVendaActionPerformed
@@ -343,10 +362,31 @@ public class ConsultaVenda extends javax.swing.JFrame {
         
         if (resposta == JOptionPane.YES_OPTION) {
             ctrlVenda.excluiVenda(codVenda);
-            System.out.println(this.jTable1.getRowCount());
-            //this.jTable1.remove(index); - arrumar essa linha maldita.
-        }
-                
+            
+            limpa();
+            
+            //Atualiza a lista
+            ArrayList<Venda> resultVendas = new ArrayList<>();
+            resultVendas = ctrlVenda.buscaVenda();
+        
+            this.model.setNumRows(0);
+        
+            Iterator it = resultVendas.iterator();
+            while (it.hasNext()) {
+                Venda registro = new Venda();
+                registro = (Venda) it.next();
+
+                Cliente cli = new Cliente();
+
+                try {
+                    cli = ctrlCli.buscarCliente("id_cliente", registro.getIdCliente());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConsultaVenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                this.model.addRow(new Object[]{registro.getCodVenda(), cli.getNome(), registro.getDataVenda()});
+            }
+        }          
     }//GEN-LAST:event_btnExcluirVendaActionPerformed
 
     private void btnCadastrarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarVendaActionPerformed
