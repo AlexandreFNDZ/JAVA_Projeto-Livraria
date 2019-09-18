@@ -36,6 +36,7 @@ public class Eireli extends javax.swing.JFrame {
         consultaProduto = new javax.swing.JLabel();
         jPanelEscondidoVendas = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        consultaVendas = new javax.swing.JLabel();
         cadastroVendas = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -213,6 +214,21 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoVendas.add(jLabel4);
         jLabel4.setBounds(10, 10, 102, 33);
 
+        consultaVendas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        consultaVendas.setForeground(new java.awt.Color(255, 255, 255));
+        consultaVendas.setText("Consulta");
+        consultaVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        consultaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                consultaVendasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                consultaVendasMouseEntered(evt);
+            }
+        });
+        jPanelEscondidoVendas.add(consultaVendas);
+        consultaVendas.setBounds(10, 80, 120, 30);
+
         cadastroVendas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cadastroVendas.setForeground(new java.awt.Color(255, 255, 255));
         cadastroVendas.setText("Cadastro");
@@ -255,7 +271,7 @@ public class Eireli extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMenuOpeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuOpeMouseEntered
-        jPanelEscondidoVendas.setSize(140, 100);
+        jPanelEscondidoVendas.setSize(140, 120);
     }//GEN-LAST:event_btnMenuOpeMouseEntered
 
     private void btnMenuOpeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuOpeMouseExited
@@ -279,7 +295,7 @@ public class Eireli extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuCadMouseExited
 
     private void jPanelEscondidoVendasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEscondidoVendasMouseEntered
-        jPanelEscondidoVendas.setSize(140, 100);
+        jPanelEscondidoVendas.setSize(140, 120);
     }//GEN-LAST:event_jPanelEscondidoVendasMouseEntered
 
     private void jPanelEscondidoVendasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelEscondidoVendasMouseExited
@@ -306,10 +322,10 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoCad.setSize(0, 0);
     }//GEN-LAST:event_consultaProdutoMouseClicked
 
-    private void cadastroVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroVendasMouseClicked
-        new Cad_Venda().setVisible(true);
+    private void consultaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseClicked
+        new ConsultaVenda().setVisible(true);
         jPanelEscondidoVendas.setSize(0, 0);
-    }//GEN-LAST:event_cadastroVendasMouseClicked
+    }//GEN-LAST:event_consultaVendasMouseClicked
 
     private void cadastroClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroClienteMouseEntered
         jPanelEscondidoCad.setSize(170, 200);
@@ -327,8 +343,17 @@ public class Eireli extends javax.swing.JFrame {
         jPanelEscondidoCad.setSize(170, 200);
     }//GEN-LAST:event_consultaProdutoMouseEntered
 
+    private void consultaVendasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_consultaVendasMouseEntered
+        jPanelEscondidoVendas.setSize(140, 120);
+    }//GEN-LAST:event_consultaVendasMouseEntered
+
+    private void cadastroVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroVendasMouseClicked
+        new Cad_Venda().setVisible(true);
+        jPanelEscondidoVendas.setSize(0, 0);
+    }//GEN-LAST:event_cadastroVendasMouseClicked
+
     private void cadastroVendasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastroVendasMouseEntered
-        jPanelEscondidoVendas.setSize(140, 100);
+        jPanelEscondidoVendas.setSize(140, 120);
     }//GEN-LAST:event_cadastroVendasMouseEntered
 
     /**
@@ -375,6 +400,7 @@ public class Eireli extends javax.swing.JFrame {
     private javax.swing.JLabel cadastroVendas;
     private javax.swing.JLabel consultaCliente;
     private javax.swing.JLabel consultaProduto;
+    private javax.swing.JLabel consultaVendas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

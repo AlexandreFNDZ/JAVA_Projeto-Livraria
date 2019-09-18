@@ -92,9 +92,8 @@ public class ClienteDAO {
         
         try {
             con = (Connection) new Conexao().getConnection();
-            String sql = "SELECT * FROM cliente where " + coluna + " = ?";
+            String sql = "SELECT * FROM cliente where " + coluna + " like'%" + frame + "%'";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, frame);
             
             rs = stmt.executeQuery();
             
