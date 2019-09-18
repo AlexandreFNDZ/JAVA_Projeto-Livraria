@@ -9,11 +9,12 @@ import control.ControleCliente;
 import control.ControleItemVenda;
 import control.ControleProduto;
 import control.ControleVenda;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
 import model.bean.ItemVenda;
@@ -36,6 +37,10 @@ public class DetalheVenda extends javax.swing.JFrame {
     ArrayList<ItemVenda> itens;
     ArrayList<Produtos> listProd;
     Cliente cliente;
+    
+    //criando uma variável NumberFormat para inserir o tipo de moeda local (R$ ##,##)
+    NumberFormat valor = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    
     /**
      * Creates new form ConsultaVenda
      */
@@ -82,8 +87,8 @@ public class DetalheVenda extends javax.swing.JFrame {
             while (itProd.hasNext()) {
                 prod = (Produtos) itProd.next();
             }
-            
-            model.addRow(new Object[] {itemVenda.getQtd(),prod.getTitulo(),prod.getAutor(),itemVenda.getPrecoUnit(),itemVenda.getPrecoUnit()*itemVenda.getQtd()});
+                      
+            model.addRow(new Object[] {itemVenda.getQtd(),prod.getTitulo(),prod.getAutor(),valor.format(itemVenda.getPrecoUnit()), valor.format(itemVenda.getPrecoUnit()*itemVenda.getQtd())});
             
             somaTotal += (itemVenda.getPrecoUnit()*itemVenda.getQtd());
         }
@@ -94,7 +99,10 @@ public class DetalheVenda extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         
-        this.txtTotal.setText(String.valueOf(somaTotal));
+        BigDecimal preco = new BigDecimal(String.valueOf(somaTotal));
+        String valorFormatado = valor.format(preco);
+        
+        this.txtTotal.setText(valorFormatado);
         this.txtEmissao.setText(venda.getDataVenda());
         this.lblVendaId.setText("N° " + venda.getCodVenda());
         this.txtCpf.setText(cliente.getCpf());
@@ -125,12 +133,12 @@ public class DetalheVenda extends javax.swing.JFrame {
         txtEndereco = new javax.swing.JTextField();
         txtCpf = new javax.swing.JFormattedTextField();
         lblTotal = new javax.swing.JLabel();
-        txtTotal = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         lblNomeLoja = new javax.swing.JLabel();
         lblTelLoja = new javax.swing.JLabel();
         lblCnpjLoja = new javax.swing.JLabel();
         lblEnderecoLoja = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -168,7 +176,7 @@ public class DetalheVenda extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -238,10 +246,6 @@ public class DetalheVenda extends javax.swing.JFrame {
         lblTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTotal.setText("Valor Total da Nota: R$");
 
-        txtTotal.setEditable(false);
-        txtTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-
         lblNomeLoja.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblNomeLoja.setText("BookStore");
 
@@ -253,6 +257,10 @@ public class DetalheVenda extends javax.swing.JFrame {
 
         lblEnderecoLoja.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lblEnderecoLoja.setText("Rua Ariovaldo da Silva Sauro, nº 123 - Jardim Manolo - CEP 13480000 - Limeira/SP");
+
+        txtTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        txtTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -288,12 +296,12 @@ public class DetalheVenda extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblTotal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(lblEnderecoLoja)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(lblNomeLoja)
@@ -337,8 +345,8 @@ public class DetalheVenda extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(txtTotal))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -419,6 +427,6 @@ public class DetalheVenda extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtEmissao;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtTotal;
+    private javax.swing.JFormattedTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

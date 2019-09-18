@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package view;
 
@@ -17,8 +13,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
@@ -105,12 +99,12 @@ public class Cad_Venda extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cmbProduto = new javax.swing.JComboBox<String>();
+        cmbProduto = new javax.swing.JComboBox<>();
         lblProduto = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblCpfCli = new javax.swing.JLabel();
         lblNomeCli = new javax.swing.JLabel();
-        cmbCliente = new javax.swing.JComboBox<String>();
+        cmbCliente = new javax.swing.JComboBox<>();
         lblCliente = new javax.swing.JLabel();
         txtNomeCli = new javax.swing.JTextField();
         txtCpfCli = new javax.swing.JTextField();
@@ -141,7 +135,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
+        cmbProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cmbProduto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbProdutoItemStateChanged(evt);
@@ -158,7 +152,7 @@ public class Cad_Venda extends javax.swing.JFrame {
 
         lblNomeCli.setText("Nome:");
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione" }));
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         cmbCliente.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbClienteItemStateChanged(evt);
