@@ -309,7 +309,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
         dados.setNumRows(0);
         String nome = (String) txtNome.getText();
         String estado = ComboBoxEstado.getSelectedItem().toString();
-        String cpf = (String) Ftxtcpf.getText().replace(".", "").replace(" ", "").replace("-", "");
+        String cpf = (String) Ftxtcpf.getText();
 
         if("".equals(nome) && "Selecione".equals(estado) && "".equals(cpf)){
             try{
@@ -324,7 +324,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
         }else{
-            if(nome != ""){
+            if(!"".equals(nome)){
                 try{
                     ArrayList<Cliente> lista;
                     lista = ctrlCliente.buscarCliente("nome", nome);
@@ -337,7 +337,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                     ex.printStackTrace();
                 }
             }
-            if(estado != "Selecione"){
+            if(!"Selecione".equals(estado)){
                 try{
                     ArrayList<Cliente> lista;
                     lista = ctrlCliente.buscarCliente("estado", estado);
@@ -350,7 +350,7 @@ public class ConsultaCliente extends javax.swing.JFrame {
                     ex.printStackTrace();
                 }
             }
-            if(cpf != ""){
+            if(!"".equals(cpf)){
                 try{
                     ArrayList<Cliente> lista;
                     lista = ctrlCliente.buscarCliente("cpf", cpf);
